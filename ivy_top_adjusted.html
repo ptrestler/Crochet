@@ -294,6 +294,33 @@
     .toc a:hover { color: var(--green-dark); text-decoration: underline; }
 
     p { margin-bottom: 10px; }
+
+    /* ── CHECKBOXES ── */
+    .step-num {
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .step-num:hover { transform: scale(1.1); }
+    .step-item.checked .step-num {
+      background: #888;
+    }
+    .step-item.checked .step-body {
+      opacity: 0.4;
+    }
+    .reset-btn {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 8px 20px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-family: Georgia, serif;
+      cursor: pointer;
+    }
+    .reset-btn:hover { background: #f5f0ea; }
   </style>
 </head>
 <body>
@@ -780,10 +807,73 @@
 
 </div>
 
+<div class="container" style="padding-top:0; text-align:center;">
+  <button class="reset-btn" onclick="resetProgress()">↺ Reset all progress</button>
+</div>
+
 <!-- ══ FOOTER ══ -->
 <footer class="site-footer">
   Original pattern: <em>Ivy Top</em> by Sunshines &amp; Crafts. This adjusted version is for personal use only. All original copyright terms apply.
 </footer>
 
+<script>
+  const STORAGE_KEY = 'ivy-pattern-checks';
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+  }
+
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function initCheckboxes() {
+    const state = loadState();
+    document.querySelectorAll('.step-item').forEach((step, i) => {
+      const key = 'step-' + i;
+      const numEl = step.querySelector('.step-num');
+      if (!numEl) return;
+      const orig = numEl.textContent.trim();
+      step.dataset.key = key;
+
+      if (state[key]) {
+        step.classList.add('checked');
+        numEl.textContent = '✓';
+      }
+
+      numEl.addEventListener('click', () => {
+        const isChecked = step.classList.toggle('checked');
+        numEl.textContent = isChecked ? '✓' : orig;
+        const s = loadState();
+        s[key] = isChecked;
+        saveState(s);
+      });
+    });
+  }
+
+  function resetProgress() {
+    if (!confirm('Reset all progress?')) return;
+    saveState({});
+    document.querySelectorAll('.step-item').forEach((step, i) => {
+      step.classList.remove('checked');
+      const numEl = step.querySelector('.step-num');
+      if (numEl) numEl.textContent = step.dataset.orig || numEl.textContent;
+    });
+    // restore original numbers
+    document.querySelectorAll('.step-item').forEach((step, i) => {
+      const numEl = step.querySelector('.step-num');
+      if (numEl) numEl.textContent = step.dataset.origNum || numEl.textContent;
+    });
+  }
+
+  // cache original numbers before any clicks
+  document.addEventListener('DOMContentLoaded', () => {
+    document.querySelectorAll('.step-item').forEach(step => {
+      const numEl = step.querySelector('.step-num');
+      if (numEl) step.dataset.origNum = numEl.textContent.trim();
+    });
+    initCheckboxes();
+  });
+</script>
 </body>
 </html>
