@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ivy Top — Adjusted Pattern</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #3d5c34;
+      --green-mid:    #4a6741;
+      --green-light:  #7b9e5a;
+      --green-pale:   #f0f5eb;
+      --green-border: #c5dab0;
+      --cream:        #faf7f2;
+      --warm-white:   #ffffff;
+      --text:         #2e2e2e;
+      --text-soft:    #5a5a5a;
+      --text-muted:   #888888;
+      --accent:       #c07a2a;
+      --border:       #e0d8cc;
+      --radius:       10px;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--green-dark);
+      color: #fff;
+      text-align: center;
+      padding: 48px 24px 36px;
+    }
+    .site-header .eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #a8c88a;
+      margin-bottom: 12px;
+    }
+    .site-header h1 {
+      font-size: clamp(40px, 8vw, 72px);
+      font-weight: normal;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+    }
+    .site-header .subtitle {
+      font-size: clamp(14px, 2.5vw, 18px);
+      color: #c8e0b0;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .site-header .attrib {
+      font-size: 12px;
+      color: #7a9a60;
+      margin-top: 8px;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ── SUMMARY BOX ── */
+    .summary-box {
+      background: var(--green-pale);
+      border: 2px solid var(--green-border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin: 36px 0;
+    }
+    .summary-box h2 {
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 14px;
+    }
+    .summary-box ul {
+      list-style: none;
+      padding: 0;
+    }
+    .summary-box ul li {
+      padding: 4px 0;
+      padding-left: 20px;
+      position: relative;
+      font-size: 15px;
+      color: var(--text-soft);
+    }
+    .summary-box ul li::before { content: "→"; position: absolute; left: 0; color: var(--green-light); }
+    .summary-box .lefty-note {
+      margin-top: 14px;
+      padding: 10px 14px;
+      background: #fff;
+      border-left: 4px solid var(--green-light);
+      border-radius: 4px;
+      font-size: 14px;
+      color: var(--green-dark);
+      font-weight: bold;
+    }
+
+    /* ── SECTION HEADINGS ── */
+    .section {
+      margin-top: 52px;
+    }
+    .section-title {
+      font-size: clamp(20px, 4vw, 26px);
+      color: var(--green-dark);
+      font-weight: normal;
+      letter-spacing: 2px;
+      border-bottom: 2px solid var(--green-border);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
+    .sub-title {
+      font-size: 17px;
+      color: var(--green-mid);
+      font-weight: bold;
+      margin: 28px 0 10px;
+    }
+
+    /* ── TABLES ── */
+    .pattern-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .pattern-table th {
+      background: var(--green-mid);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: normal;
+      letter-spacing: 0.5px;
+    }
+    .pattern-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pattern-table tr:nth-child(even) td { background: #f8f5f0; }
+    .pattern-table tr:last-child td { border-bottom: none; }
+
+    /* ── STEPS ── */
+    .steps { margin-top: 16px; }
+    .step-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 34px;
+      height: 34px;
+      background: var(--green-mid);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-style: normal;
+      font-family: Arial, sans-serif;
+      margin-top: 2px;
+    }
+    .step-body { flex: 1; }
+    .step-body p { margin-bottom: 8px; }
+
+    /* ── STITCH COUNT CALLOUT ── */
+    .ws-count {
+      display: inline-block;
+      background: var(--green-pale);
+      border: 1px solid var(--green-border);
+      border-radius: 6px;
+      padding: 3px 12px;
+      font-size: 14px;
+      color: var(--green-dark);
+      font-weight: bold;
+      margin: 4px 0 8px;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ── NOTES / TIPS ── */
+    .note {
+      background: #fff9f0;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 14px;
+      margin: 8px 0 12px;
+      font-size: 14px;
+      color: var(--text-soft);
+      font-style: italic;
+    }
+    .tip {
+      background: var(--green-pale);
+      border-left: 3px solid var(--green-light);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 14px;
+      margin: 8px 0 12px;
+      font-size: 14px;
+      color: var(--green-dark);
+    }
+    .tip::before { content: "▶  "; }
+    .lefty {
+      background: #eef5e8;
+      border-left: 3px solid var(--green-mid);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 14px;
+      margin: 8px 0 12px;
+      font-size: 14px;
+      color: var(--green-dark);
+    }
+    .lefty::before { content: "✦ LEFTY:  "; font-weight: bold; }
+
+    /* ── MATERIALS LIST ── */
+    .mat-list {
+      list-style: none;
+      padding: 0;
+      columns: 2;
+      column-gap: 32px;
+    }
+    @media (max-width: 500px) { .mat-list { columns: 1; } }
+    .mat-list li {
+      padding: 5px 0 5px 20px;
+      position: relative;
+      font-size: 15px;
+      break-inside: avoid;
+    }
+    .mat-list li::before { content: "•"; position: absolute; left: 0; color: var(--green-light); }
+
+    /* ── PART HEADER ── */
+    .part-header {
+      background: var(--green-dark);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 18px 24px;
+      margin-bottom: 24px;
+    }
+    .part-header .part-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #a8c88a;
+      margin-bottom: 4px;
+    }
+    .part-header h2 {
+      font-size: 22px;
+      font-weight: normal;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      font-style: italic;
+      margin-top: 60px;
+    }
+
+    /* ── NAV ── */
+    .toc {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .toc h2 {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .toc a {
+      display: block;
+      color: var(--green-mid);
+      text-decoration: none;
+      padding: 3px 0;
+      font-size: 15px;
+    }
+    .toc a:hover { color: var(--green-dark); text-decoration: underline; }
+
+    p { margin-bottom: 10px; }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <div class="eyebrow">Sunshines &amp; Crafts</div>
+  <h1>Ivy Top</h1>
+  <div class="subtitle">Gauge-Adjusted Pattern · Size Medium · Left-Handed Edition</div>
+  <div class="attrib">Original pattern by Sunshines &amp; Crafts · Adjusted for Big Twist Baby Bunny yarn &amp; 2.5mm hook</div>
+</header>
+
+<div class="container">
+
+  <!-- ══ TABLE OF CONTENTS ══ -->
+  <nav class="toc">
+    <h2>Contents</h2>
+    <a href="#summary">Adjustment Summary</a>
+    <a href="#materials">Materials</a>
+    <a href="#measurements">Measurements</a>
+    <a href="#gauge">Gauge</a>
+    <a href="#wattle">How to Do the Wattle Stitch</a>
+    <a href="#front">Part 1: Front Panel</a>
+    <a href="#back">Part 2: Back Panels</a>
+    <a href="#finishing">Finishing</a>
+    <a href="#tips">Additional Tips</a>
+  </nav>
+
+  <!-- ══ SUMMARY ══ -->
+  <div class="summary-box" id="summary">
+    <h2>Adjustment Summary</h2>
+    <ul>
+      <li>Original hook: 3.5mm &nbsp;→&nbsp; New hook: <strong>2.5mm</strong></li>
+      <li>Original yarn: Sport weight &nbsp;→&nbsp; New yarn: <strong>Big Twist Baby Bunny (Weight 1, Super Fine)</strong></li>
+      <li>Original gauge: 2×2 in = 9 rows × 4 wattle sts &nbsp;→&nbsp; New gauge: <strong>12 rows × 5 wattle sts</strong></li>
+      <li>All stitch counts scaled ×5/4 · All row counts scaled ×4/3 · Size Medium only</li>
+    </ul>
+    <div class="lefty-note">✦ Left-handed edition — all left/right directional references have been mirrored throughout.</div>
+  </div>
+
+  <!-- ══ MATERIALS ══ -->
+  <section class="section" id="materials">
+    <h2 class="section-title">Materials</h2>
+    <ul class="mat-list">
+      <li>Hook: 2.5mm</li>
+      <li>Big Twist Baby Bunny yarn (Weight 1, Super Fine) — 200–250g for size M</li>
+      <li>Tape measure</li>
+      <li>Stitch markers (at least 4)</li>
+      <li>Scissors</li>
+      <li>Row counter (strongly recommended — wattle stitch is difficult to count)</li>
+    </ul>
+  </section>
+
+  <!-- ══ MEASUREMENTS ══ -->
+  <section class="section" id="measurements">
+    <h2 class="section-title">Measurements (Size M)</h2>
+    <p>Target body measurements remain the same as the original pattern — only stitch and row counts change.</p>
+    <table class="pattern-table">
+      <thead>
+        <tr><th>Measurement</th><th>Original (M)</th><th>Adjusted (M)</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Bust</td><td>36–38"</td><td>36–38" (unchanged)</td></tr>
+        <tr><td>Waist</td><td>28–32"</td><td>28–32" (unchanged)</td></tr>
+        <tr><td>Armhole depth</td><td>7.5"</td><td>7.5" (unchanged)</td></tr>
+        <tr><td>Strap-to-strap</td><td>12.5"</td><td>12.5" (unchanged)</td></tr>
+        <tr><td>Neckline</td><td>6.5"</td><td>6.5" (unchanged)</td></tr>
+      </tbody>
+    </table>
+    <div class="note">This top is ideal for a cropped fit. Recommended length: 1–2 inches above the navel, or just before your waist starts to curve back out.</div>
+  </section>
+
+  <!-- ══ GAUGE ══ -->
+  <section class="section" id="gauge">
+    <h2 class="section-title">Gauge</h2>
+    <table class="pattern-table">
+      <thead>
+        <tr><th></th><th>Hook</th><th>2×2 in swatch</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>Original pattern</td><td>3.5mm</td><td>9 rows × 4 wattle sts</td></tr>
+        <tr><td><strong>This adjusted pattern</strong></td><td><strong>2.5mm</strong></td><td><strong>12 rows × 5 wattle sts</strong></td></tr>
+      </tbody>
+    </table>
+    <p>To make a gauge swatch: Chain 33, then follow the Wattle Stitch instructions until you have at least 15 rows. Measure a 2×2 inch section — it should contain 12 rows and 5 wattle stitches. Adjust hook size if needed before starting the pattern.</p>
+  </section>
+
+  <!-- ══ WATTLE STITCH ══ -->
+  <section class="section" id="wattle">
+    <h2 class="section-title">How to Do the Wattle Stitch</h2>
+    <p>The wattle stitch is composed of a cluster of sc, ch, and dc separated by 2 sts, with sc on both ends of the row.</p>
+    <p><strong>1 cluster of sc–ch1–dc = 1 ws (wattle stitch)</strong></p>
+
+    <div class="sub-title">Row 1</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body"><p>Create a slip knot. Chain in multiples of 3.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body"><p>Sc on the 2nd ch from the hook. On the next ch, make sc–ch1–dc. These 3 stitches (sc–ch1–dc) are all placed in the same ch.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body"><p>*Skip 2 ch, then make sc–ch1–dc on the next.* Repeat ** until you reach the last 3 chains of the row.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body"><p>When you reach the last 3 chains: skip 2, then sc on the last ch.</p></div>
+      </div>
+    </div>
+
+    <div class="sub-title">Row 2 (and all subsequent rows)</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-body"><p>Ch1. Flip your work. Sc on top of the sc from the previous row.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-body"><p>Make sc–ch1–dc on every ch1 space of the row. Sc on top of the last sc from the previous row.</p></div>
+      </div>
+    </div>
+    <div class="tip">From here, Row 2 (Steps 5–6) is repeated throughout the pattern. It will be referred to as the <strong>non-increase/non-decrease row</strong>.</div>
+  </section>
+
+  <!-- ══ PART 1: FRONT PANEL ══ -->
+  <section class="section" id="front">
+    <div class="part-header">
+      <div class="part-label">Part 1</div>
+      <h2>Front Panel</h2>
+    </div>
+    <div class="note">The stitch counts shown are for Size M only.</div>
+
+    <div class="sub-title">Straps &amp; Neckline (Rows 1–11)</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body"><p>Create a slip knot. Ch 30. (This corresponds to the width of the strap.)</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <p>Sc on the 2nd ch from the hook. *On the next ch, make a ws, then skip 2 ch.* Repeat ** until you reach the last 3 chains. Skip 2, sc on the last ch. This counts as Row 1.</p>
+          <span class="ws-count">→ Total ws: 9</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body"><p>Ch1. Flip your work. Sc on top of the sc from the previous row. Make a ws on every ch1 space. Sc on top of the last sc.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body"><p>Repeat Step 3 until you have a total of 11 rows. This is your strap length. The wattle stitch stretches lengthwise when worn — consider this when measuring. You may adjust in multiples of 2 rows based on your preferences.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-body"><p>After the last sc on your last row, ch 43. Use a stitch marker to hold the last chain and cut yarn, leaving a 1–2 inch tail. This chain becomes your neckline. You may adjust in multiples of 3 + 1 (e.g. 43, 46, 49…) to ensure the last chain lands a wattle stitch.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-body"><p>Repeat Steps 1–4 for the second strap. Do not cut the yarn — this will be your working yarn.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">7</div>
+        <div class="step-body"><p>Both straps should face you the same way when connecting. Take the chain from Strap 1 (make sure it is not twisted) and slip stitch onto the 1st sc of the last row of Strap 2. Fasten off the tail, then return to the working yarn from Step 6.</p></div>
+      </div>
+    </div>
+
+    <div class="sub-title">Connecting Row (Row 12)</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">8</div>
+        <div class="step-body"><p>Sc on top of the sc from the previous row. Make a ws on every ch1 space until you reach the last ch1 space of the strap.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">9</div>
+        <div class="step-body"><p>Begin working across the connecting chain. Skip the sc after the last ch1 space, then make a ws on the 1st ch after the sc. *Skip 2 ch, make a ws on the next.* Repeat ** until you reach the end of the connecting chain.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">10</div>
+        <div class="step-body">
+          <p>When you reach the other strap: skip sc, make a ws on every ch1 space of the row. Sc on top of the last sc.</p>
+          <span class="ws-count">→ Total ws: 33</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Increases (Rows 13–49)</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">11</div>
+        <div class="step-body">
+          <p>Ch1. Flip your work. Sc on top of the sc from the previous row. Make a ws on every ch1 space. Sc on top of the last sc. (Non-increase row.) Repeat for 7 more rows.</p>
+          <span class="ws-count">→ Total rows: 19</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">12</div>
+        <div class="step-body">
+          <p>Mark the 5th ch1 space from both ends of the row. Ch1, flip your work. Sc on top of the sc. Make a ws on every ch1 space until you reach the marker. Make 2 ws on the same ch1 space (increase). Continue with 1 ws per ch1 space until the other marker. Make 2 ws on the same ch1 space (increase). Continue to the end. Sc on top of the last sc.</p>
+          <span class="ws-count">→ Total ws: 35</span>
+          <p>Repeat Step 11 (non-increase row) for 20 more rows.</p>
+          <span class="ws-count">→ Total rows: 39</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">13</div>
+        <div class="step-body">
+          <p>You will now make increases for the armhole and bust. Mark the 10th ch1 space from both ends of the row.</p>
+          <div class="note">The marked ch1 spaces should fall on the middle of each breast area. Adjust position if you changed your ws count.</div>
+          <p>Ch1, flip your work. Sc on top of the sc. Make a ws on that same st where you placed the sc (armhole increase). Make a ws on every ch1 space until you reach the marker. Make 2 ws on the same ch1 space (bust increase). Continue until the other marker. Make 2 ws (bust increase). Continue to the end. Make another ws and sc on the last st (armhole increase).</p>
+          <span class="ws-count">→ Total ws: 39</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">14</div>
+        <div class="step-body"><p>Repeat Step 11 (non-increase row).</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">15</div>
+        <div class="step-body">
+          <p>Repeat Step 13 (increase row). This is the last armhole increase. Place a stitch marker at both ends of this row — you will need these markers when connecting the panels.</p>
+          <span class="ws-count">→ Total ws: 43</span>
+          <div class="note">Check your armhole depth against a well-fitting top. The stitch markers mark the bottom edge of the armhole.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">16</div>
+        <div class="step-body">
+          <p>Repeat Step 11 for 2 non-increase rows.</p>
+          <span class="ws-count">→ Total rows: 45</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">17</div>
+        <div class="step-body">
+          <p>Bust increases — the table below shows the increase rows. All other rows between them are non-increase rows (repeat Step 11).</p>
+          <table class="pattern-table" style="margin-top:12px;">
+            <thead><tr><th>Row</th><th>Increase Instructions</th><th>Total ws</th></tr></thead>
+            <tbody>
+              <tr>
+                <td>Row 47</td>
+                <td>Increase on the 8th and 14th ch1 space from both ends</td>
+                <td>47</td>
+              </tr>
+              <tr>
+                <td>Row 49</td>
+                <td>Increase on the 10th ch1 space from both ends</td>
+                <td>49</td>
+              </tr>
+            </tbody>
+          </table>
+          <div class="note">Marked ch1 spaces should align with the middle of each breast area. Refer to the original pattern illustration for placement guidance.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">18</div>
+        <div class="step-body">
+          <p>Repeat Step 11 (non-increase rows) until you reach the widest point of your bust/nipple area. Try the top on as you go. Once you've reached your widest point, begin the decrease steps below.</p>
+          <div class="note">Sample worked with 3 additional non-increase rows here before starting decreases.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Decrease Rows</div>
+    <p>The decreases shape the underbust and waist. To perform the sc2tog decrease in a wattle stitch row, refer to the sc2tog instructions in the original pattern.</p>
+    <div class="steps" style="margin-top:16px;">
+      <div class="step-item">
+        <div class="step-num">19</div>
+        <div class="step-body">
+          <div class="lefty">Mark the 10th ch1 space from the left end (hook side) and the 11th ch1 space from the right end.</div>
+          <p>Ch1, flip your work. Sc on top of the sc. Make a ws on every ch1 space until the marker. Sc2tog on the marked ch1 space and its adjacent ch1 space, then ch1–dc on the same ch1 space (decrease). Continue until the other marker. Sc2tog on the marked ch1 space and its adjacent ch1 space, then ch1–dc. Continue to the end. Sc on top of the last sc.</p>
+          <span class="ws-count">→ Total ws: 47</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">20</div>
+        <div class="step-body"><p>Repeat Step 11 (non-decrease row).</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">21</div>
+        <div class="step-body">
+          <p>Repeat Step 19 (decrease row).</p>
+          <span class="ws-count">→ Total ws: 45</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">22</div>
+        <div class="step-body"><p>Repeat Step 11 (non-decrease row).</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">23</div>
+        <div class="step-body">
+          <p>Decrease on 4 ch1 spaces this row, following the table below:</p>
+          <table class="pattern-table" style="margin-top:12px;">
+            <thead><tr><th>From the left end (hook side)</th><th>From the right end</th><th>Total ws after</th></tr></thead>
+            <tbody><tr><td>8th, 14th</td><td>9th, 15th</td><td>41</td></tr></tbody>
+          </table>
+          <p>Perform the same sc2tog decrease as in Step 19 on each marked ch1 space.</p>
+          <span class="ws-count">→ Total ws: 41</span>
+          <div class="note">Try the top on (stretch lightly). The edges of the front panel should fall on the midline of your side.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">24</div>
+        <div class="step-body"><p>Repeat Step 11 (non-decrease row).</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">25</div>
+        <div class="step-body">
+          <p>Repeat Step 23 (decrease row).</p>
+          <span class="ws-count">→ Total ws: 37</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">26</div>
+        <div class="step-body"><p>Repeat Step 11 (non-decrease row).</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">27</div>
+        <div class="step-body">
+          <p>Repeat Step 19 (decrease row — 2 ch1 spaces only, as in Steps 19–21).</p>
+          <span class="ws-count">→ Total ws: 35</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">28</div>
+        <div class="step-body"><p>Repeat Step 11 (non-decrease rows) until you reach your desired length (ideally 1–2 inches above the navel, or just before your waist curves back out). Make sure your total row count is an odd number. Cut yarn and fasten off. Proceed to Part 2.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 2: BACK PANELS ══ -->
+  <section class="section" id="back">
+    <div class="part-header">
+      <div class="part-label">Part 2</div>
+      <h2>Back Panels</h2>
+    </div>
+    <p>Make 2 identical back panels — one for each side. Each panel forms half of the back of the top.</p>
+    <div class="note">The stitch counts shown are for Size M only. If you added extra rows to your front panel strap, add the same number here in Step 5.</div>
+
+    <div class="steps" style="margin-top:20px;">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body"><p>Create a slip knot. Ch 30. (Same chain count as the front panel strap.)</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <p>Sc on the 2nd ch from the hook. *On the next ch, make a ws, then skip 2 ch.* Repeat ** until the last 3 chains. Skip 2, sc on the last ch. (Row 1.)</p>
+          <span class="ws-count">→ Total ws: 9</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <p>Ch1, flip your work. Sc on top of the sc. Make a ws on every ch1 space. Sc on top of the last sc. Repeat until you have a total of 4 rows.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <p>Row 5 (increase row):</p>
+          <div class="lefty">Mark the 4th ch1 space from the left end (hook side).</div>
+          <p>Ch1, flip your work. Sc on top of the sc. Make a ws on every ch1 space until you reach the marker. Make 2 ws on the same ch1 space (increase). Continue with 1 ws per ch1 space to the end. Sc on top of the last sc.</p>
+          <span class="ws-count">→ Total ws: 10</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <p>Repeat Step 3 (non-increase row) until you have a total of 32 rows.</p>
+          <div class="note">If you added rows to the front strap, add those extra rows here to match.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <div class="lefty">Armhole increase on the left side.</div>
+          <p>Ch1, flip your work. Sc on top of the sc. Make a ws on that same st (left-side armhole increase). Make a ws on every ch1 space. Sc on top of the last sc.</p>
+          <span class="ws-count">→ Total ws: 11</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">7</div>
+        <div class="step-body"><p>Repeat Step 3 (non-increase row).</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <p>Continue with increase and non-increase rows per the table below. Odd-numbered rows in the table are increase rows (repeat Step 6). Rows not listed are non-increase rows (repeat Step 3). Place a stitch marker on your last increase row.</p>
+          <table class="pattern-table" style="margin-top:12px;">
+            <thead><tr><th>Increase Row</th><th>Total ws after</th></tr></thead>
+            <tbody>
+              <tr><td>Row 36</td><td>12</td></tr>
+              <tr><td>Row 39</td><td>13</td></tr>
+              <tr><td>Row 41</td><td>14</td></tr>
+              <tr><td>Row 44</td><td>15 ⬅ place stitch marker!</td></tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">9</div>
+        <div class="step-body">
+          <p>Repeat Step 3 (non-increase row) for 5 more rows.</p>
+          <span class="ws-count">→ Total rows: 49</span>
+        </div>
+      </div>
+
+      <div class="sub-title" style="margin-left:50px;">Back V-Opening (Rows 50–57)</div>
+      <div class="step-item">
+        <div class="step-num">10</div>
+        <div class="step-body">
+          <p>Begin the back V-opening. Ch1, flip your work.</p>
+          <div class="lefty">Your hook is on the RIGHT side of the fabric as worn. For the first 5 ch1 spaces you encounter: make sc–ch1–sc instead of a full wattle stitch. Make a ws on all remaining ch1 spaces. Sc on top of the last sc.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">11</div>
+        <div class="step-body">
+          <div class="lefty">Ch1, flip your work. Sc on top of the sc. Make a ws on every ch1 space except the last 5 (LEFT side of fabric as worn), where you make sc–ch1–sc instead. Sc on top of the last sc.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">12</div>
+        <div class="step-body">
+          <p>Repeat Steps 10–11 for 6 more rows (3 additional pairs).</p>
+          <span class="ws-count">→ Total rows: 57</span>
+        </div>
+      </div>
+
+      <div class="sub-title" style="margin-left:50px;">Tie (Final Rows)</div>
+      <div class="step-item">
+        <div class="step-num">13</div>
+        <div class="step-body">
+          <p>Repeat Step 3 (non-increase row) until you reach the last 11 rows of your back panel.</p>
+          <div class="note">The total rows for your back panel should match your front panel. Count front panel rows and subtract 11 to find when to begin Step 14.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">14</div>
+        <div class="step-body"><p>Begin the tie. Since your previous row is odd, your hook should be on the side opposite the armhole. Ch 75. If you want longer ties to form a ribbon bow, ch more in multiples of 3.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">15</div>
+        <div class="step-body"><p>Sc on the 2nd ch from the hook. *On the next ch, make a ws, then skip 2 ch.* Repeat ** until you reach the sc from the previous row. Skip sc. Make a ws on every ch1 space of the row. Sc on top of the last sc.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">16</div>
+        <div class="step-body"><p>Ch1, flip your work. Sc on top of the sc. Make a ws on every ch1 space of the row. Sc on top of the last sc.</p></div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">17</div>
+        <div class="step-body"><p>Repeat Step 16 until your total back panel row count matches your front panel row count. Ch1. Cut yarn and fasten off.</p></div>
+      </div>
+    </div>
+
+    <div class="tip" style="margin-top:20px;">Repeat Steps 1–17 to make the second back panel.</div>
+  </section>
+
+  <!-- ══ FINISHING ══ -->
+  <section class="section" id="finishing">
+    <h2 class="section-title">Finishing</h2>
+    <p>Connect all panels together (sides and straps) using single crochet. For the sides, connect starting from the bottom edge up to — but not including — the last increase row where you placed the stitch markers.</p>
+    <div class="tip">Optional: Add an sc edging around the entire top for cleaner, more refined edges.</div>
+    <p><strong>Congratulations — your Ivy Top is complete!</strong></p>
+  </section>
+
+  <!-- ══ TIPS ══ -->
+  <section class="section" id="tips">
+    <h2 class="section-title">Additional Tips</h2>
+    <p>If your back panels droop when worn, try one or more of the following:</p>
+    <ul class="mat-list" style="columns:1; margin-top:12px;">
+      <li>Shorten the overall length of the top. Keep it a few inches above the navel.</li>
+      <li>Make thicker back ties by adding more rows in Step 12 of the back panel (add rows in multiples of 2).</li>
+      <li>Add an sc edging around the back, and sc2tog at any drooping spots to gently cinch them in.</li>
+    </ul>
+    <div class="tip" style="margin-top:20px;">Always try the top on as you go — the wattle stitch stretches when worn, so in-progress fitting gives the best results.</div>
+    <div class="tip">Since this adjusted pattern uses a much finer yarn, your finished fabric will be denser and drapier than the original. This is expected.</div>
+  </section>
+
+</div>
+
+<!-- ══ FOOTER ══ -->
+<footer class="site-footer">
+  Original pattern: <em>Ivy Top</em> by Sunshines &amp; Crafts. This adjusted version is for personal use only. All original copyright terms apply.
+</footer>
+
+</body>
+</html>
