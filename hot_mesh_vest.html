@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hot Mesh Vest — Pattern</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #3d5c34;
+      --green-mid:    #4a6741;
+      --green-light:  #7b9e5a;
+      --green-pale:   #f0f5eb;
+      --green-border: #c5dab0;
+      --cream:        #faf7f2;
+      --warm-white:   #ffffff;
+      --text:         #2e2e2e;
+      --text-soft:    #5a5a5a;
+      --text-muted:   #888888;
+      --accent:       #c07a2a;
+      --border:       #e0d8cc;
+      --radius:       10px;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--green-dark);
+      color: #fff;
+      text-align: center;
+      padding: 48px 24px 36px;
+    }
+    .site-header .home-link {
+      display: inline-block;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: #7a9a60; text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .site-header .home-link:hover { color: #a8c88a; }
+    .site-header .eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #a8c88a;
+      margin-bottom: 12px;
+    }
+    .site-header h1 {
+      font-size: clamp(36px, 7vw, 66px);
+      font-weight: normal;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+    }
+    .site-header .subtitle {
+      font-size: clamp(14px, 2.5vw, 18px);
+      color: #c8e0b0;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .site-header .attrib {
+      font-size: 12px;
+      color: #7a9a60;
+      margin-top: 8px;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ── SUMMARY BOX ── */
+    .summary-box {
+      background: var(--green-pale);
+      border: 2px solid var(--green-border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin: 36px 0;
+    }
+    .summary-box h2 {
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 14px;
+    }
+    .summary-box ul {
+      list-style: none;
+      padding: 0;
+    }
+    .summary-box ul li {
+      padding: 4px 0;
+      padding-left: 20px;
+      position: relative;
+      font-size: 15px;
+      color: var(--text-soft);
+    }
+    .summary-box ul li::before { content: "→"; position: absolute; left: 0; color: var(--green-light); }
+
+    /* ── SECTION HEADINGS ── */
+    .section { margin-top: 52px; }
+    .section-title {
+      font-size: clamp(20px, 4vw, 26px);
+      color: var(--green-dark);
+      font-weight: normal;
+      letter-spacing: 2px;
+      border-bottom: 2px solid var(--green-border);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
+    .sub-title {
+      font-size: 17px;
+      color: var(--green-mid);
+      font-weight: bold;
+      margin: 28px 0 10px;
+    }
+
+    /* ── TABLES ── */
+    .pattern-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .pattern-table th {
+      background: var(--green-mid);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: normal;
+      letter-spacing: 0.5px;
+    }
+    .pattern-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pattern-table tr:nth-child(even) td { background: #f8f5f0; }
+    .pattern-table tr:last-child td { border-bottom: none; }
+
+    /* ── STEPS ── */
+    .steps { margin-top: 16px; }
+    .step-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      background: var(--green-mid);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      margin-top: 2px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .step-num:hover { transform: scale(1.1); }
+    .step-item.checked .step-num { background: #888; }
+    .step-item.checked .step-body { opacity: 0.4; }
+    .step-body { flex: 1; }
+    .step-body p { margin-bottom: 8px; }
+
+    /* ── FORMULA BOX ── */
+    .formula-box {
+      background: var(--warm-white);
+      border: 2px solid var(--green-border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 12px 0 16px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      color: var(--green-dark);
+    }
+    .formula-box .formula-line {
+      margin-bottom: 6px;
+    }
+    .formula-box .formula-line:last-child { margin-bottom: 0; }
+    .formula-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-family: Georgia, serif;
+    }
+
+    /* ── STITCH CALLOUT ── */
+    .stitch-count {
+      display: inline-block;
+      background: var(--green-pale);
+      border: 1px solid var(--green-border);
+      border-radius: 6px;
+      padding: 3px 12px;
+      font-size: 14px;
+      color: var(--green-dark);
+      font-weight: bold;
+      margin: 4px 0 8px;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ── NOTES / TIPS ── */
+    .note {
+      background: #fff9f0;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 14px;
+      margin: 8px 0 12px;
+      font-size: 14px;
+      color: var(--text-soft);
+      font-style: italic;
+    }
+    .tip {
+      background: var(--green-pale);
+      border-left: 3px solid var(--green-light);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 14px;
+      margin: 8px 0 12px;
+      font-size: 14px;
+      color: var(--green-dark);
+    }
+    .tip::before { content: "▶  "; }
+
+    /* ── MATERIALS LIST ── */
+    .mat-list {
+      list-style: none;
+      padding: 0;
+      columns: 2;
+      column-gap: 32px;
+    }
+    @media (max-width: 500px) { .mat-list { columns: 1; } }
+    .mat-list li {
+      padding: 5px 0 5px 20px;
+      position: relative;
+      font-size: 15px;
+      break-inside: avoid;
+    }
+    .mat-list li::before { content: "•"; position: absolute; left: 0; color: var(--green-light); }
+
+    /* ── ABBREV LIST ── */
+    .abbrev-list {
+      list-style: none;
+      padding: 0;
+      columns: 2;
+      column-gap: 32px;
+    }
+    @media (max-width: 500px) { .abbrev-list { columns: 1; } }
+    .abbrev-list li {
+      padding: 4px 0 4px 0;
+      font-size: 15px;
+      break-inside: avoid;
+    }
+    .abbrev-list li strong {
+      color: var(--green-dark);
+      font-family: Arial, sans-serif;
+      margin-right: 6px;
+    }
+
+    /* ── PART HEADER ── */
+    .part-header {
+      background: var(--green-dark);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 18px 24px;
+      margin-bottom: 24px;
+    }
+    .part-header .part-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #a8c88a;
+      margin-bottom: 4px;
+    }
+    .part-header h2 {
+      font-size: 22px;
+      font-weight: normal;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      font-style: italic;
+      margin-top: 60px;
+    }
+
+    /* ── NAV ── */
+    .toc {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .toc h2 {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .toc a {
+      display: block;
+      color: var(--green-mid);
+      text-decoration: none;
+      padding: 3px 0;
+      font-size: 15px;
+    }
+    .toc a:hover { color: var(--green-dark); text-decoration: underline; }
+
+    p { margin-bottom: 10px; }
+
+    .reset-btn {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 8px 20px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-family: Georgia, serif;
+      cursor: pointer;
+    }
+    .reset-btn:hover { background: #f5f0ea; }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <a href="index.html" class="home-link">← Home</a>
+  <div class="eyebrow">Crochetreat</div>
+  <h1>Hot Mesh Vest</h1>
+  <div class="subtitle">Made-to-Measure Crochet Vest Pattern</div>
+  <div class="attrib">Pattern by Crochetreat · © 2025 Crochetreat · For personal use only</div>
+</header>
+
+<div class="container">
+
+  <!-- ══ TABLE OF CONTENTS ══ -->
+  <nav class="toc">
+    <h2>Contents</h2>
+    <a href="#materials">Materials</a>
+    <a href="#gauge">Gauge</a>
+    <a href="#measurements">Measurements You'll Need</a>
+    <a href="#abbreviations">Abbreviations</a>
+    <a href="#body">Part 1: Body (Worked in the Round)</a>
+    <a href="#divide">Part 2: Dividing Front &amp; Back Panels</a>
+    <a href="#front">Part 3: Front Panel &amp; Shoulders</a>
+    <a href="#back">Part 4: Back Panel &amp; Shoulders</a>
+    <a href="#ribbing">Part 5: Ribbing</a>
+    <a href="#care">Caring Tips</a>
+  </nav>
+
+  <!-- ══ MATERIALS ══ -->
+  <section class="section" id="materials">
+    <h2 class="section-title">Materials</h2>
+    <ul class="mat-list">
+      <li>Hook: 2.5–3.00 mm (main)</li>
+      <li>Hook: 1.5 mm (for ribbing)</li>
+      <li>Aunt Lydia's Classic 10 thread (lace weight / WPI ~30)</li>
+      <li>Yardage: Size S ≈ 450 yds (~1 ball)</li>
+      <li>Scissors</li>
+      <li>Measuring tape</li>
+      <li>Stitch markers</li>
+    </ul>
+    <div class="note">You can substitute any yarn up to size 2 Sport weight. The pattern is made-to-measure so it works with any yarn — just swatch first and adjust as needed.</div>
+  </section>
+
+  <!-- ══ GAUGE ══ -->
+  <section class="section" id="gauge">
+    <h2 class="section-title">Gauge</h2>
+    <table class="pattern-table">
+      <thead>
+        <tr><th>Hook</th><th>4" × 4" swatch</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>2.5–3.00 mm</td><td>12 rows × 6.5 holes</td></tr>
+      </tbody>
+    </table>
+    <div class="tip">Because this is a made-to-measure pattern, gauge affects the drape and feel but not the finished size — your measurements drive the math. Still worth swatching to check that you like the fabric density.</div>
+  </section>
+
+  <!-- ══ MEASUREMENTS ══ -->
+  <section class="section" id="measurements">
+    <h2 class="section-title">Measurements You'll Need</h2>
+    <p>Take these measurements before you start. Write them down — you'll refer back to them throughout.</p>
+    <table class="pattern-table">
+      <thead>
+        <tr><th>Measurement</th><th>Where to measure</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><strong>Bust</strong></td><td>Around the fullest part of your chest</td></tr>
+        <tr><td><strong>Waist</strong></td><td>Around the narrowest part of your torso</td></tr>
+        <tr><td><strong>Length 1</strong></td><td>Bottom hem up to where armholes begin</td></tr>
+        <tr><td><strong>Length 2</strong></td><td>Armhole level up to neckline</td></tr>
+        <tr><td><strong>Length 3</strong></td><td>Neckline up to the top of the shoulder</td></tr>
+        <tr><td><strong>Width (W)</strong></td><td>Shoulder to neck (width of one shoulder strap)</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <!-- ══ ABBREVIATIONS ══ -->
+  <section class="section" id="abbreviations">
+    <h2 class="section-title">Abbreviations (US Terms)</h2>
+    <ul class="abbrev-list">
+      <li><strong>Sc</strong> Single crochet</li>
+      <li><strong>Ch</strong> Chain</li>
+      <li><strong>Sl st</strong> Slip stitch</li>
+      <li><strong>Dc</strong> Double crochet</li>
+      <li><strong>Sc blo</strong> Single crochet in back loop only</li>
+      <li><strong>St</strong> Stitch</li>
+      <li><strong>Sk</strong> Skip one stitch</li>
+    </ul>
+  </section>
+
+  <!-- ══ PART 1: BODY ══ -->
+  <section class="section" id="body">
+    <div class="part-header">
+      <div class="part-label">Part 1</div>
+      <h2>Body — Worked in the Round</h2>
+    </div>
+
+    <div class="sub-title">Starting Chain</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <p>Calculate your starting chain length <strong>N</strong>:</p>
+          <div class="formula-box">
+            <div class="formula-label">Formula</div>
+            <div class="formula-line"><strong>N</strong> = (Bust + Waist) ÷ 2</div>
+            <div class="formula-line">Round N to the nearest multiple of 4, then add 1 (for the turning chain).</div>
+          </div>
+          <p>Make a chain that measures <strong>N inches / cm</strong> in length. The number of chains must be a multiple of 4, plus ch 1.</p>
+          <div class="note">If you want a looser fit, add a few extra chains to N before rounding.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <p>Slip stitch into the first chain to form a ring. Be careful not to twist the chain.</p>
+          <div class="tip">Lay the chain flat on a table and check it isn't twisted before closing the ring.</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Round 1</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <p>Ch 3 (counts as 1st dc). <em>*Ch 3, sk 3, dc 1 in the next ch.*</em> Repeat * to * to the end of the round. After the last complete repeat: ch 3, sk 3, sl st into the 3rd ch of the 1st dc. Turn.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Round 2</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <p>Ch 3 (counts as 1st dc), ch 2, sc 1 in the chain space, ch 2, dc 1 in the dc st. <em>*Ch 2, sc 1 in ch space, ch 2, dc 1 in dc st.*</em> Repeat * to * to end. After the last complete repeat: ch 2, sc 1 in ch space, ch 2, sl st into the 3rd ch of the 1st dc. Turn.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Round 3</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <p>Ch 3 (counts as 1st dc). <em>*Ch 3, sk ch2, sk 1 sc, sk ch2, dc 1 in dc st.*</em> Repeat * to * to end. After the last ch 3, sl st into the 3rd ch of the 1st dc. Turn.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Continue to Length 1</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <p>Repeat Rounds 2 and 3 alternately until the piece measures <strong>Length 1</strong> (bottom hem to armhole start). Remember to account for approximately <strong>1 inch / 2 cm</strong> of ribbing that will be added at the bottom.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <p>Your final round must be a <strong>Round 3</strong> (the ch 3 / hole round). <strong>Do not cut your yarn.</strong></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 2: DIVIDING ══ -->
+  <section class="section" id="divide">
+    <div class="part-header">
+      <div class="part-label">Part 2</div>
+      <h2>Dividing Front &amp; Back Panels</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <p>Count the total number of large holes (the pattern repeats) across your last round. Call this <strong>N</strong>.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">9</div>
+        <div class="step-body">
+          <p>Calculate your panel sizes:</p>
+          <div class="formula-box">
+            <div class="formula-label">Formula</div>
+            <div class="formula-line"><strong>X</strong> = N − 2 &nbsp;&nbsp;(skip 1 hole on each side for armholes)</div>
+            <div class="formula-line"><strong>A</strong> = X ÷ 2</div>
+            <div class="formula-line"><strong>Front panel</strong> = A + 1 holes</div>
+            <div class="formula-line"><strong>Back panel</strong> = A − 1 holes</div>
+          </div>
+          <p>Example: 48 holes total → X = 46, A = 23 → Front = 24 holes, Back = 22 holes</p>
+          <div class="note">If you prefer a more narrow upper body, skip more than 1 hole on each side. Skipping 1 gives a boxier, wider shoulder line.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">10</div>
+        <div class="step-body">
+          <p>Count <strong>A + 1</strong> holes from your hook (these are the front panel). Place a stitch marker on the next hole.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">11</div>
+        <div class="step-body">
+          <p>Count <strong>A − 1</strong> holes from the hole next to the stitch marker (these are the back panel). Place a stitch marker on the next hole.</p>
+          <p>The 2 remaining holes (one on each side) are the skipped armhole gaps.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 3: FRONT PANEL ══ -->
+  <section class="section" id="front">
+    <div class="part-header">
+      <div class="part-label">Part 3</div>
+      <h2>Front Panel &amp; Shoulders</h2>
+    </div>
+
+    <div class="sub-title">Front Panel Body (to neckline)</div>
+    <p>Switch from working in the round to working in rows, across the front panel only.</p>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">12</div>
+        <div class="step-body">
+          <p><strong>Row 1:</strong> Ch 3 (counts as 1st dc). <em>*Ch 2, sc 1 in chain space, ch 2, dc 1 in dc st.*</em> Repeat * to * to the end of the front panel. Turn.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">13</div>
+        <div class="step-body">
+          <p><strong>Row 2:</strong> Ch 3 (counts as 1st dc). <em>*Ch 3, sk ch2, sk 1 sc, sk ch2, dc 1 in dc st.*</em> Repeat * to * to end. Turn.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">14</div>
+        <div class="step-body">
+          <p>Repeat Rows 1–2 until the piece measures <strong>Length 2</strong> (from armhole level up to the neckline).</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Front Shoulder (first side)</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">15</div>
+        <div class="step-body">
+          <p>Work only across the shoulder width <strong>W</strong> (from one shoulder to neck). Continue repeating Rows 1–2 for <strong>Length 3</strong> (neckline to top of shoulder).</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">16</div>
+        <div class="step-body">
+          <p>Ch 1, pull tight, and cut yarn leaving a short tail.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Front Shoulder (second side)</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">17</div>
+        <div class="step-body">
+          <p>Attach yarn on the opposite shoulder. Work identically to Steps 15–16. Ch 1, pull tight, cut yarn.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 4: BACK PANEL ══ -->
+  <section class="section" id="back">
+    <div class="part-header">
+      <div class="part-label">Part 4</div>
+      <h2>Back Panel &amp; Shoulders</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">18</div>
+        <div class="step-body">
+          <p>Attach yarn at the back panel. Work exactly as the front panel (Steps 12–14), but work <strong>2 extra rows</strong> on the back panel before starting the shoulder.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">19</div>
+        <div class="step-body">
+          <p>For each back shoulder: work <strong>2 fewer rows</strong> compared to the front shoulder. This compensates for the extra body rows so both panels meet evenly at the top.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">20</div>
+        <div class="step-body">
+          <p>Work both back shoulders the same way as the front (Steps 15–17). Ch 1, pull tight, cut yarn on each side.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Joining the Shoulders</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">21</div>
+        <div class="step-body">
+          <p>Turn the vest <strong>inside out</strong>. Line up the front and back shoulder pieces. Slip stitch the two layers together, inserting the hook through both loops of one stitch from each layer at a time. Repeat for the second shoulder.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 5: RIBBING ══ -->
+  <section class="section" id="ribbing">
+    <div class="part-header">
+      <div class="part-label">Part 5</div>
+      <h2>Ribbing</h2>
+    </div>
+    <p>Add ribbing around the bottom hem, both armholes, and the neckline.</p>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">22</div>
+        <div class="step-body">
+          <p>Attach yarn into any space or chain at the edge you're adding ribbing to. Work with the <strong>outside of the garment facing you</strong>.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">23</div>
+        <div class="step-body">
+          <p>Ch 7 (or more chains for a wider ribbing band). Switch to your <strong>1.5 mm hook</strong>.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">24</div>
+        <div class="step-body">
+          <p><strong>Row 1:</strong> Sc blo in the 2nd ch from hook and in each ch across — <span class="stitch-count">6 sc</span>. Sl st 2 into 2 of the spaces/chains on the vest edge, then flip.</p>
+          <div class="note">Around the armholes there are no defined stitches — insert the hook into the dc posts instead, working 2 sl sts per dc row.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">25</div>
+        <div class="step-body">
+          <p><strong>Row 2:</strong> Sk the 2 sl sts, sc blo in each sc across — <span class="stitch-count">6 sc</span>. Ch 1, flip back.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">26</div>
+        <div class="step-body">
+          <p>Repeat Rows 1–2 around the entire edge, working in back loops only throughout. When you return to the start, connect the ribbing ends by slip stitching from the inside.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">27</div>
+        <div class="step-body">
+          <p>Weave in all ends. Repeat ribbing on all remaining edges (armholes and neckline).</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ CARE ══ -->
+  <section class="section" id="care">
+    <h2 class="section-title">Caring Tips</h2>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <p><strong>Hand-wash in cold water</strong> with a mild detergent. Gently swish the vest through the water — do not wring or scrub.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <p>After rinsing, <strong>gently squeeze</strong> (do not wring) and roll the vest in a dry towel. Press firmly as you roll to absorb excess water.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <p><strong>Lay flat to dry</strong> on a clean dry towel or rack. Re-shape the vest as needed. Allow 24 hours. If still damp, flip onto a fresh towel, re-shape, and allow another 24 hours.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<div class="container" style="padding-top:0; text-align:center;">
+  <button class="reset-btn" onclick="resetProgress()">↺ Reset all progress</button>
+</div>
+
+<footer class="site-footer">
+  <p>Pattern by Crochetreat · © 2025 Crochetreat · For personal use only · Do not redistribute or resell</p>
+</footer>
+
+<script>
+  const STORAGE_KEY = 'hot-mesh-vest-checks';
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function initCheckboxes() {
+    const state = loadState();
+    document.querySelectorAll('.step-item').forEach((step, i) => {
+      const numEl = step.querySelector('.step-num');
+      if (!numEl) return;
+      const orig = numEl.textContent.trim();
+      step.dataset.orig = orig;
+      const key = 'step-' + i;
+
+      if (state[key]) {
+        step.classList.add('checked');
+        numEl.textContent = '✓';
+      }
+
+      numEl.addEventListener('click', () => {
+        const isChecked = step.classList.toggle('checked');
+        numEl.textContent = isChecked ? '✓' : orig;
+        const s = loadState();
+        s[key] = isChecked;
+        saveState(s);
+      });
+    });
+  }
+
+  function resetProgress() {
+    if (!confirm('Reset all progress?')) return;
+    saveState({});
+    document.querySelectorAll('.step-item').forEach((step, i) => {
+      step.classList.remove('checked');
+      const numEl = step.querySelector('.step-num');
+      if (numEl) numEl.textContent = step.dataset.orig || numEl.textContent;
+    });
+  }
+
+  initCheckboxes();
+</script>
+</body>
+</html>
