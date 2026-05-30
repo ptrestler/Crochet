@@ -107,6 +107,13 @@
       from { opacity: 0; transform: translateY(-4px); }
       to { opacity: 1; transform: translateY(0); }
     }
+
+    .home-link {
+      display: inline-block; margin-bottom: 12px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: #a89880; text-decoration: none;
+    }
+    .home-link:hover { color: #6b5d52; }
   </style>
 </head>
 <body>
@@ -166,6 +173,25 @@ const SECTIONS = [
   { id: "back_right", label: "Back Panel (R)", color: "#7ea8a0", notes: BACK_NOTES },
 ];
 
+const STORAGE_KEY = 'ivy-row-counter-v1';
+
+function saveState() {
+  localStorage.setItem(STORAGE_KEY, JSON.stringify({
+    sectionIdx: state.sectionIdx,
+    rows: state.rows,
+  }));
+}
+
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved && Array.isArray(saved.rows) && saved.rows.length === 3) {
+      state.rows = saved.rows.map(r => Number(r) || 0);
+      state.sectionIdx = Number(saved.sectionIdx) || 0;
+    }
+  } catch (e) {}
+}
+
 let state = {
   sectionIdx: 0,
   rows: [0, 0, 0],
@@ -201,6 +227,7 @@ function render() {
   const app = document.getElementById('app');
   app.innerHTML = `
     <div class="title-area">
+      <a href="index.html" class="home-link">← Home</a>
       <div class="title-sub">Sunshines &amp; Crafts</div>
       <h1>Ivy Top</h1>
       <div class="title-detail">Row Counter · Baby Bunny / Size M</div>
@@ -285,6 +312,7 @@ function setFlash(text) {
 function selectSection(i) {
   state.sectionIdx = i;
   state.flashNote = null;
+  saveState();
   const section = SECTIONS[i];
   const currentNote = section.notes.find(n => n.row === state.rows[i]);
   if (currentNote) setFlash(currentNote.text);
@@ -293,6 +321,7 @@ function selectSection(i) {
 
 function increment() {
   state.rows[state.sectionIdx]++;
+  saveState();
   const section = SECTIONS[state.sectionIdx];
   const currentNote = section.notes.find(n => n.row === state.rows[state.sectionIdx]);
   if (currentNote) setFlash(currentNote.text);
@@ -302,6 +331,7 @@ function increment() {
 function decrement() {
   if (state.rows[state.sectionIdx] > 0) {
     state.rows[state.sectionIdx]--;
+    saveState();
     const section = SECTIONS[state.sectionIdx];
     const currentNote = section.notes.find(n => n.row === state.rows[state.sectionIdx]);
     if (currentNote) setFlash(currentNote.text);
@@ -312,6 +342,7 @@ function decrement() {
 function resetSection() {
   state.rows[state.sectionIdx] = 0;
   state.flashNote = null;
+  saveState();
   render();
 }
 
@@ -319,9 +350,11 @@ function resetAll() {
   state.rows = [0, 0, 0];
   state.sectionIdx = 0;
   state.flashNote = null;
+  saveState();
   render();
 }
 
+loadState();
 render();
 </script>
 </body>
