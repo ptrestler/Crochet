@@ -1,0 +1,551 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Detroit Football Team Afghan — Pattern</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #3d5c34;
+      --green-mid:    #4a6741;
+      --green-light:  #7b9e5a;
+      --green-pale:   #f0f5eb;
+      --green-border: #c5dab0;
+      --cream:        #faf7f2;
+      --warm-white:   #ffffff;
+      --text:         #2e2e2e;
+      --text-soft:    #5a5a5a;
+      --text-muted:   #888888;
+      --accent:       #c07a2a;
+      --border:       #e0d8cc;
+      --radius:       10px;
+      /* yarn colors */
+      --yarn-fg: #b6b8b5;
+      --yarn-b:  #1b1b1b;
+      --yarn-w:  #f4f1ea;
+      --yarn-s:  #0a72ab;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--green-dark);
+      color: #fff;
+      text-align: center;
+      padding: 48px 24px 36px;
+    }
+    .site-header .home-link {
+      display: inline-block;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: #7a9a60; text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .site-header .home-link:hover { color: #a8c88a; }
+    .site-header .eyebrow {
+      font-size: 11px; letter-spacing: 4px; text-transform: uppercase;
+      color: #a8c88a; margin-bottom: 12px;
+    }
+    .site-header h1 {
+      font-size: clamp(30px, 6vw, 56px);
+      font-weight: normal; letter-spacing: 5px; margin-bottom: 10px;
+    }
+    .site-header .subtitle {
+      font-size: clamp(14px, 2.5vw, 18px);
+      color: #c8e0b0; font-style: italic; margin-bottom: 4px;
+    }
+    .site-header .attrib { font-size: 12px; color: #7a9a60; margin-top: 8px; }
+
+    .container { max-width: 820px; margin: 0 auto; padding: 40px 24px 80px; }
+
+    /* ── SUMMARY BOX ── */
+    .summary-box {
+      background: var(--green-pale);
+      border: 2px solid var(--green-border);
+      border-radius: var(--radius);
+      padding: 24px 28px; margin: 36px 0;
+    }
+    .summary-box h2 {
+      font-size: 15px; letter-spacing: 2px; text-transform: uppercase;
+      color: var(--green-mid); margin-bottom: 14px;
+    }
+    .summary-box ul { list-style: none; padding: 0; }
+    .summary-box ul li {
+      padding: 4px 0 4px 20px; position: relative;
+      font-size: 15px; color: var(--text-soft);
+    }
+    .summary-box ul li::before { content: "→"; position: absolute; left: 0; color: var(--green-light); }
+
+    /* ── SECTIONS ── */
+    .section { margin-top: 52px; }
+    .section-title {
+      font-size: clamp(20px, 4vw, 26px); color: var(--green-dark);
+      font-weight: normal; letter-spacing: 2px;
+      border-bottom: 2px solid var(--green-border);
+      padding-bottom: 8px; margin-bottom: 24px;
+    }
+    .sub-title { font-size: 17px; color: var(--green-mid); font-weight: bold; margin: 28px 0 10px; }
+
+    /* ── TABLES ── */
+    .pattern-table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 14px; }
+    .pattern-table th {
+      background: var(--green-mid); color: #fff; padding: 10px 14px;
+      text-align: left; font-weight: normal; letter-spacing: 0.5px;
+    }
+    .pattern-table td { padding: 10px 14px; border-bottom: 1px solid var(--border); }
+    .pattern-table tr:nth-child(even) td { background: #f8f5f0; }
+    .pattern-table tr:last-child td { border-bottom: none; }
+
+    /* ── STEPS ── */
+    .steps { margin-top: 16px; }
+    .step-item { display: flex; gap: 16px; margin-bottom: 20px; align-items: flex-start; }
+    .step-num {
+      flex-shrink: 0; width: 34px; height: 34px;
+      background: var(--green-mid); color: #fff; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 13px; font-family: Arial, sans-serif; margin-top: 2px;
+      cursor: pointer; user-select: none; transition: background 0.2s, transform 0.15s;
+    }
+    .step-num:hover { transform: scale(1.1); }
+    .step-item.checked .step-num { background: #888; }
+    .step-item.checked .step-body { opacity: 0.4; }
+    .step-body { flex: 1; }
+    .step-body p { margin-bottom: 8px; }
+
+    /* ── NOTES / TIPS ── */
+    .note {
+      background: #fff9f0; border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0; padding: 8px 14px; margin: 8px 0 12px;
+      font-size: 14px; color: var(--text-soft); font-style: italic;
+    }
+    .tip {
+      background: var(--green-pale); border-left: 3px solid var(--green-light);
+      border-radius: 0 6px 6px 0; padding: 8px 14px; margin: 8px 0 12px;
+      font-size: 14px; color: var(--green-dark);
+    }
+    .tip::before { content: "▶  "; }
+
+    /* ── MATERIALS / ABBREV LISTS ── */
+    .mat-list, .abbrev-list { list-style: none; padding: 0; columns: 2; column-gap: 32px; }
+    @media (max-width: 500px) { .mat-list, .abbrev-list { columns: 1; } }
+    .mat-list li { padding: 5px 0 5px 20px; position: relative; font-size: 15px; break-inside: avoid; }
+    .mat-list li::before { content: "•"; position: absolute; left: 0; color: var(--green-light); }
+    .abbrev-list li { padding: 4px 0; font-size: 15px; break-inside: avoid; }
+    .abbrev-list li strong { color: var(--green-dark); font-family: Arial, sans-serif; margin-right: 6px; }
+
+    /* ── PART HEADER ── */
+    .part-header {
+      background: var(--green-dark); color: #fff; border-radius: var(--radius);
+      padding: 18px 24px; margin-bottom: 24px;
+    }
+    .part-header .part-label {
+      font-size: 11px; letter-spacing: 3px; text-transform: uppercase;
+      color: #a8c88a; margin-bottom: 4px;
+    }
+    .part-header h2 { font-size: 22px; font-weight: normal; }
+
+    /* ── TOC ── */
+    .toc {
+      background: var(--warm-white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 20px 24px; margin: 24px 0;
+    }
+    .toc h2 {
+      font-size: 12px; letter-spacing: 3px; text-transform: uppercase;
+      color: var(--text-muted); margin-bottom: 12px;
+    }
+    .toc a { display: block; color: var(--green-mid); text-decoration: none; padding: 3px 0; font-size: 15px; }
+    .toc a:hover { color: var(--green-dark); text-decoration: underline; }
+
+    /* ── COLOR CHART ── */
+    .chart-wrap {
+      background: var(--warm-white); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 18px; margin: 16px 0;
+      text-align: center;
+    }
+    #chartCanvas {
+      width: 100%; height: auto; image-rendering: pixelated; image-rendering: crisp-edges;
+      border: 1px solid var(--border); border-radius: 4px; background: var(--yarn-fg);
+      display: block;
+    }
+    .chart-controls { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; margin-top: 14px; }
+    .chart-btn {
+      padding: 6px 16px; border: 1px solid var(--green-border); border-radius: 20px;
+      background: #fff; color: var(--green-mid); font-family: Georgia, serif;
+      font-size: 13px; cursor: pointer;
+    }
+    .chart-btn:hover { background: var(--green-pale); }
+    .legend { display: flex; gap: 16px; justify-content: center; flex-wrap: wrap; margin-top: 14px; font-size: 13px; }
+    .legend span { display: inline-flex; align-items: center; gap: 6px; color: var(--text-soft); }
+    .swatch { width: 16px; height: 16px; border-radius: 3px; border: 1px solid rgba(0,0,0,0.15); display: inline-block; }
+
+    /* ── ROW TRACKER ── */
+    .tracker {
+      background: #fff; border: 1px solid var(--border); border-radius: var(--radius);
+      padding: 24px; margin: 16px 0; text-align: center;
+    }
+    .tracker-rownum { font-size: 52px; color: var(--green-dark); line-height: 1; font-weight: bold; }
+    .tracker-rowlabel { font-size: 12px; letter-spacing: 2px; text-transform: uppercase; color: var(--text-muted); margin-bottom: 4px; }
+    .side-badge {
+      display: inline-block; margin-top: 10px; padding: 4px 14px; border-radius: 14px;
+      font-size: 12px; letter-spacing: 1px;
+    }
+    .side-rs { background: var(--green-pale); color: var(--green-dark); }
+    .side-ws { background: #efe7da; color: #8a7a5a; }
+    .seq { margin: 22px 0; display: flex; flex-wrap: wrap; gap: 8px; justify-content: center; }
+    .seq-chip {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 6px 12px 6px 8px; border-radius: 8px; border: 1px solid var(--border);
+      background: #fafafa; font-size: 14px; font-family: Arial, sans-serif;
+    }
+    .seq-chip .sw { width: 18px; height: 18px; border-radius: 4px; border: 1px solid rgba(0,0,0,0.15); }
+    .seq-chip .cnt { font-weight: bold; color: var(--text); }
+    .seq-chip .cname { color: var(--text-soft); font-size: 12px; }
+    .tracker-total { font-size: 13px; color: var(--text-muted); margin-bottom: 18px; }
+    .tracker-btns { display: flex; gap: 12px; justify-content: center; align-items: center; }
+    .t-btn {
+      width: 54px; height: 54px; border-radius: 50%; border: 2px solid var(--green-border);
+      background: #fff; color: var(--green-mid); font-size: 22px; cursor: pointer;
+      font-family: Georgia, serif; transition: transform 0.12s;
+    }
+    .t-btn:active { transform: scale(0.93); }
+    .t-btn:disabled { color: #ccc; border-color: #eee; cursor: not-allowed; }
+    .t-next { width: 66px; height: 66px; background: var(--green-mid); color: #fff; border: none; font-size: 26px; }
+    .jump-row { margin-top: 18px; font-size: 13px; color: var(--text-soft); }
+    .jump-row input {
+      width: 64px; padding: 5px 8px; border: 1px solid var(--border); border-radius: 6px;
+      font-family: Georgia, serif; font-size: 14px; text-align: center;
+    }
+    .jump-row button {
+      padding: 5px 12px; border: 1px solid var(--green-border); border-radius: 6px;
+      background: var(--green-pale); color: var(--green-dark); cursor: pointer; font-family: Georgia, serif;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      text-align: center; padding: 32px 24px; font-size: 13px; color: var(--text-muted);
+      border-top: 1px solid var(--border); font-style: italic; margin-top: 60px;
+    }
+    p { margin-bottom: 10px; }
+    .reset-btn {
+      display: inline-block; margin-top: 12px; padding: 8px 20px;
+      border: 1px solid var(--border); border-radius: 20px; background: #fff;
+      color: var(--text-muted); font-size: 13px; font-family: Georgia, serif; cursor: pointer;
+    }
+    .reset-btn:hover { background: #f5f0ea; }
+  </style>
+</head>
+<body>
+
+<header class="site-header">
+  <a href="index.html" class="home-link">← Home</a>
+  <div class="eyebrow">South Shore Stitch</div>
+  <h1>Detroit Football Team Afghan</h1>
+  <div class="subtitle">Graphghan Blanket · Intermediate · Worsted Weight · Left-Handed Edition</div>
+  <div class="attrib">Pattern by South Shore Stitch (Taylor Taylor) · © 2024 · For personal use</div>
+</header>
+
+<div class="container">
+
+  <nav class="toc">
+    <h2>Contents</h2>
+    <a href="#materials">Materials</a>
+    <a href="#gauge">Gauge &amp; Size</a>
+    <a href="#abbreviations">Abbreviations</a>
+    <a href="#notes">Pattern Notes</a>
+    <a href="#chart">Color Chart</a>
+    <a href="#tracker">Interactive Row Tracker</a>
+    <a href="#border">Border</a>
+    <a href="#backing">Finishing &amp; Backing</a>
+    <a href="#care">Care</a>
+  </nav>
+
+  <div class="summary-box">
+    <h2>At a Glance</h2>
+    <ul>
+      <li>Worked flat, <strong>sideways</strong>: 167 rows wide × 140 HDC tall</li>
+      <li>4 colors: Feather Gray (background), Black, White, Sapphire blue</li>
+      <li>Rows 1–17 &amp; 151–167 are solid Feather Gray; the design lives in rows 18–150</li>
+      <li>Every row totals <strong>140 stitches</strong></li>
+    </ul>
+  </div>
+
+  <!-- MATERIALS -->
+  <section class="section" id="materials">
+    <h2 class="section-title">Materials</h2>
+    <ul class="mat-list">
+      <li>Caron Simply Soft — Feather Gray × 5</li>
+      <li>Caron Simply Soft — Black × 1</li>
+      <li>Caron Simply Soft — White × 1</li>
+      <li>Big Twist Value — Sapphire × 3</li>
+      <li>7 mm crochet hook (main)</li>
+      <li>5 mm crochet hook</li>
+      <li>Scissors, measuring tape, stitch markers</li>
+      <li>Optional backing: Minky fleece, ~52" × 72"</li>
+      <li>Optional: sharp tool to punch holes in backing fabric</li>
+    </ul>
+    <div class="note">Any worsted-weight yarn works; the designer doesn't recommend going thicker than a size 2 sport weight.</div>
+  </section>
+
+  <!-- GAUGE -->
+  <section class="section" id="gauge">
+    <h2 class="section-title">Gauge &amp; Size</h2>
+    <table class="pattern-table">
+      <thead><tr><th>Hook</th><th>Gauge</th><th>Finished design</th></tr></thead>
+      <tbody>
+        <tr><td>7 mm</td><td>Worsted weight HDC</td><td>167 rows × 140 stitches</td></tr>
+      </tbody>
+    </table>
+    <div class="tip">Because the blanket is a stitch count grid, your finished size depends on your yarn and gauge — make a small swatch to estimate the final dimensions before committing.</div>
+  </section>
+
+  <!-- ABBREVIATIONS -->
+  <section class="section" id="abbreviations">
+    <h2 class="section-title">Abbreviations (US Terms)</h2>
+    <ul class="abbrev-list">
+      <li><strong>HDC</strong> Half double crochet</li>
+      <li><strong>SC</strong> Single crochet</li>
+      <li><strong>SL</strong> Slip stitch</li>
+      <li><strong>St</strong> Stitch</li>
+      <li><strong>WS</strong> Wrong side (back)</li>
+      <li><strong>RS</strong> Right side (front)</li>
+    </ul>
+  </section>
+
+  <!-- NOTES -->
+  <section class="section" id="notes">
+    <h2 class="section-title">Pattern Notes</h2>
+    <div class="sub-title">Getting Started</div>
+    <p>Begin with a starting chain of <strong>142</strong>. HDC in the 2nd chain from the hook and across for a total of <strong>140 HDC</strong>. This is the first row of your blanket and becomes the left edge.</p>
+    <p>At the end of each row, <strong>ch 1 and turn</strong>. This chain does not count as a stitch — it just adds height. Every row totals 140 stitches.</p>
+    <div class="note">Even rows are the Right Side (front); odd rows are the Wrong Side (back). The row tracker below shows this for each row.</div>
+
+    <div class="sub-title">Changing Colors</div>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">1</div><div class="step-body"><p>Work the last stitch of the old color until you have <strong>two loops left</strong> on your hook.</p></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-body"><p>Yarn over with the <strong>new color</strong> and pull through both loops to complete the stitch — this transitions the color seamlessly.</p></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-body"><p>Continue with the new color: start your next HDC as usual (insert hook, yarn over, pull up a loop — 3 loops on hook — yarn over and pull through all three).</p></div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-body"><p>Carry yarn and make all color changes on the <strong>wrong side</strong> to keep the front neat.</p></div></div>
+    </div>
+  </section>
+
+  <!-- CHART -->
+  <section class="section" id="chart">
+    <h2 class="section-title">Color Chart</h2>
+    <p>The full blanket, rendered from the row data. Each vertical column is one row (row 1 at the left edge). Alternating rows are flipped to show the true picture.</p>
+    <div class="chart-wrap">
+      <canvas id="chartCanvas" width="167" height="140"></canvas>
+      <div class="chart-controls">
+        <button class="chart-btn" id="flipBtn">⇄ Mirror image</button>
+        <button class="chart-btn" id="gotoChartBtn">Jump tracker to highlighted row</button>
+      </div>
+      <div class="legend">
+        <span><span class="swatch" style="background:var(--yarn-fg)"></span> Feather Gray</span>
+        <span><span class="swatch" style="background:var(--yarn-b)"></span> Black</span>
+        <span><span class="swatch" style="background:var(--yarn-w)"></span> White</span>
+        <span><span class="swatch" style="background:var(--yarn-s)"></span> Sapphire</span>
+      </div>
+    </div>
+    <div class="note">This is the finished image you'll produce working left-handed (lion facing right, matching the photo). The highlighted column shows the row currently selected in the tracker below. Use “Mirror image” if you'd rather preview the opposite orientation.</div>
+  </section>
+
+  <!-- TRACKER -->
+  <section class="section" id="tracker">
+    <h2 class="section-title">Interactive Row Tracker</h2>
+    <p>Work through the rows one at a time. Each row's color sequence is listed in <strong>left-handed working order</strong> — reversed from the original right-handed pattern — so that, working in your natural direction, the finished lion faces right and matches the photo. Your place is saved automatically in this browser.</p>
+    <div class="note">✦ Left-Handed Edition: the color counts below are already reversed for you. Just work them left-to-right as shown.</div>
+    <div class="tracker">
+      <div class="tracker-rowlabel">Row</div>
+      <div class="tracker-rownum" id="rowNum">1</div>
+      <div><span class="side-badge" id="sideBadge">Wrong Side</span></div>
+      <div class="seq" id="seq"></div>
+      <div class="tracker-total" id="rowTotal">140 stitches</div>
+      <div class="tracker-btns">
+        <button class="t-btn" id="prevBtn" title="Previous row">−</button>
+        <button class="t-btn t-next" id="nextBtn" title="Next row">+</button>
+      </div>
+      <div class="jump-row">
+        Go to row <input type="number" id="jumpInput" min="1" max="167" /> <button id="jumpBtn">Go</button>
+      </div>
+    </div>
+    <div style="text-align:center;">
+      <button class="reset-btn" id="resetBtn">↺ Reset to row 1</button>
+    </div>
+  </section>
+
+  <!-- BORDER -->
+  <section class="section" id="border">
+    <div class="part-header"><div class="part-label">Finishing</div><h2>SC Border</h2></div>
+    <p>At the end of row 167: <strong>DO NOT fasten off, DO NOT ch 1, DO NOT turn.</strong> You'll work a single crochet border around the whole blanket.</p>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">1</div><div class="step-body"><p>Place 1 SC in the chain stitch at the end of each row down the side. <em>If you plan to add backing, count your stitches on each side exactly.</em></p></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-body"><p>At the corner, place 2–3 SC in the corner stitch.</p></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-body"><p>Along the starting-chain edge, place 1 SC in the back loop of each stitch. At the next corner, 2–3 SC.</p></div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-body"><p>Down the final side, 1 SC in each row-end chain. 2–3 SC in the last corner, then SL to the first HDC of row 167.</p></div></div>
+    </div>
+    <div class="tip"><strong>No backing?</strong> Keep working rounds of SC until the border reaches your desired thickness, then tie off and weave in all ends. You're done!</div>
+  </section>
+
+  <!-- BACKING -->
+  <section class="section" id="backing">
+    <div class="part-header"><div class="part-label">Optional</div><h2>Adding a Fleece Backing (Preferred)</h2></div>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">1</div><div class="step-body"><p>Tie off and trim ends — no need to weave them in, the backing covers them. Lay the blanket on the backing fabric and cut the fabric about 1 inch larger on all sides.</p></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-body"><p>Punch holes around the fabric edge — the <strong>same number per side</strong> as you have border stitches on the blanket.</p></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-body"><p>Insert hook through a hole from WS to RS and pull up a loop of matching yarn. Fold the fabric edge over (both right sides facing out), yarn over and pull up a loop to attach.</p></div></div>
+      <div class="step-item"><div class="step-num">4</div><div class="step-body"><p>SC along the folded edge using the holes as base stitches, 2–3 SC in each corner. Keep the same stitch count as the blanket edge.</p></div></div>
+      <div class="step-item"><div class="step-num">5</div><div class="step-body"><p>Match the wrong sides of blanket and backing, align the SC edges, and SL the two pieces together all the way around. Tie off well and weave in the final ends.</p></div></div>
+    </div>
+  </section>
+
+  <!-- CARE -->
+  <section class="section" id="care">
+    <h2 class="section-title">Care</h2>
+    <div class="steps">
+      <div class="step-item"><div class="step-num">1</div><div class="step-body"><p><strong>Hand-wash in cold water</strong> with mild detergent. Gently swish — don't wring or scrub.</p></div></div>
+      <div class="step-item"><div class="step-num">2</div><div class="step-body"><p>Squeeze gently, then roll in a dry towel, pressing to absorb water.</p></div></div>
+      <div class="step-item"><div class="step-num">3</div><div class="step-body"><p>Lay flat to dry, reshape, and allow ~24 hours. Flip and repeat if still damp.</p></div></div>
+    </div>
+  </section>
+
+</div>
+
+<footer class="site-footer">
+  <p>Pattern by South Shore Stitch (Taylor Taylor) · © 2024 · For personal use only</p>
+</footer>
+
+<script>
+const ROWS=[[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",82],["B",1],["FG",57]],[["FG",56],["B",2],["FG",82]],[["FG",82],["B",3],["FG",55]],[["FG",54],["B",4],["FG",82]],[["FG",82],["B",1],["W",1],["B",3],["FG",53]],[["FG",52],["B",3],["W",1],["B",2],["FG",82]],[["FG",81],["B",2],["W",3],["B",3],["FG",51]],[["FG",51],["B",3],["W",4],["B",2],["FG",80]],[["FG",79],["B",3],["W",2],["S",1],["W",2],["B",3],["FG",50]],[["FG",50],["B",2],["W",3],["S",1],["W",3],["B",4],["FG",77]],[["FG",76],["B",3],["W",3],["S",3],["W",3],["B",3],["FG",49]],[["FG",49],["B",2],["W",4],["S",4],["W",3],["B",3],["FG",75]],[["FG",74],["B",3],["W",3],["S",5],["W",1],["S",1],["W",2],["B",2],["FG",49]],[["FG",49],["B",2],["W",2],["S",1],["W",1],["S",6],["W",3],["B",2],["FG",74]],[["FG",73],["B",3],["W",2],["S",6],["W",1],["S",2],["W",2],["B",2],["FG",49]],[["FG",49],["B",2],["W",3],["S",8],["W",2],["B",3],["FG",73]],[["FG",74],["B",2],["W",2],["S",7],["W",3],["B",3],["FG",49]],[["FG",50],["B",2],["W",4],["S",5],["W",3],["B",3],["FG",73]],[["FG",72],["B",3],["W",3],["S",3],["W",5],["B",3],["FG",51]],[["FG",52],["B",5],["W",3],["S",3],["W",3],["B",4],["FG",70]],[["FG",67],["B",6],["W",3],["S",3],["W",3],["B",5],["FG",53]],[["FG",56],["B",3],["W",3],["S",3],["W",5],["B",8],["FG",62]],[["FG",58],["B",7],["W",8],["S",5],["W",3],["B",2],["FG",57]],[["FG",58],["B",2],["W",3],["S",7],["W",9],["B",5],["FG",56]],[["FG",54],["B",4],["W",7],["S",10],["W",4],["B",3],["FG",58]],[["FG",59],["B",4],["W",4],["S",12],["W",4],["B",4],["FG",53]],[["FG",52],["B",3],["W",3],["S",12],["W",6],["B",3],["FG",61]],[["FG",62],["B",4],["W",8],["S",9],["W",3],["B",3],["FG",51]],[["FG",23],["B",6],["FG",21],["B",3],["W",3],["S",7],["W",7],["B",6],["FG",64]],[["FG",66],["B",8],["W",5],["S",6],["W",3],["B",3],["FG",18],["B",3],["W",3],["B",17],["FG",8]],[["FG",6],["B",4],["W",8],["B",5],["W",6],["B",3],["FG",17],["B",2],["W",3],["S",6],["W",3],["B",6],["FG",71]],[["FG",74],["B",4],["W",3],["S",5],["W",3],["B",3],["FG",14],["B",3],["W",4],["S",1],["W",18],["B",3],["FG",5]],[["FG",4],["B",3],["W",4],["S",5],["W",8],["S",4],["W",4],["B",4],["FG",12],["B",2],["W",3],["S",5],["W",3],["B",3],["FG",76]],[["FG",77],["B",3],["W",3],["S",4],["W",3],["B",16],["W",4],["S",21],["W",3],["B",2],["FG",4]],[["FG",4],["B",3],["W",2],["S",21],["W",8],["B",11],["W",3],["S",5],["W",2],["B",3],["FG",78]],[["FG",79],["B",2],["W",3],["S",4],["W",19],["S",24],["W",2],["B",3],["FG",4]],[["FG",5],["B",2],["W",3],["S",11],["W",2],["S",14],["W",14],["S",5],["W",2],["B",3],["FG",79]],[["FG",79],["B",3],["W",2],["S",5],["W",1],["S",26],["W",8],["S",7],["W",2],["B",2],["FG",5]],[["FG",5],["B",2],["W",3],["S",6],["W",9],["S",30],["W",3],["B",4],["FG",78]],[["FG",77],["B",4],["W",3],["S",30],["W",3],["B",5],["W",3],["S",3],["W",4],["B",3],["FG",5]],[["FG",6],["B",4],["W",7],["B",3],["FG",1],["B",3],["W",3],["S",30],["W",4],["B",3],["FG",76]],[["FG",75],["B",3],["W",4],["S",30],["W",3],["B",3],["FG",3],["B",3],["W",5],["B",4],["FG",7]],[["FG",9],["B",9],["FG",5],["B",2],["W",3],["S",32],["W",3],["B",3],["FG",74]],[["FG",74],["B",2],["W",3],["S",32],["W",3],["B",3],["FG",6],["B",7],["FG",10]],[["FG",24],["B",3],["W",3],["S",32],["W",3],["B",2],["FG",73]],[["FG",73],["B",2],["W",3],["S",32],["W",3],["B",2],["FG",25]],[["FG",25],["B",3],["W",3],["S",32],["W",2],["B",3],["FG",72]],[["FG",72],["B",2],["W",3],["S",31],["W",3],["B",3],["FG",26]],[["FG",27],["B",3],["W",3],["S",31],["W",2],["B",3],["FG",71]],[["FG",70],["B",3],["W",3],["S",28],["W",5],["B",3],["FG",28]],[["FG",26],["B",7],["W",5],["S",27],["W",3],["B",3],["FG",69]],[["FG",68],["B",3],["W",3],["S",25],["W",6],["B",3],["W",3],["B",4],["FG",25]],[["FG",24],["B",3],["W",7],["B",4],["W",5],["S",24],["W",3],["B",5],["FG",65]],[["FG",64],["B",4],["W",4],["S",23],["W",7],["B",3],["W",4],["S",2],["W",3],["B",2],["FG",24]],[["FG",24],["B",2],["W",3],["S",4],["W",7],["S",2],["W",5],["S",22],["W",5],["B",4],["FG",5],["B",5],["FG",52]],[["FG",52],["B",7],["FG",1],["B",4],["W",5],["S",23],["W",5],["S",4],["W",5],["S",5],["W",3],["B",2],["FG",24]],[["FG",24],["B",2],["W",3],["S",15],["W",2],["S",1],["W",2],["S",24],["W",5],["B",14],["FG",48]],[["FG",46],["B",9],["W",4],["B",2],["W",4],["S",25],["W",1],["S",2],["W",2],["S",16],["W",3],["B",2],["FG",24]],[["FG",24],["B",2],["W",3],["S",17],["W",2],["S",2],["W",1],["S",26],["W",14],["B",5],["FG",44]],[["FG",43],["B",4],["W",5],["S",1],["W",3],["S",2],["W",3],["S",27],["W",1],["S",2],["W",2],["S",18],["W",3],["B",2],["FG",24]],[["FG",24],["B",2],["W",3],["S",18],["W",2],["S",31],["W",2],["S",3],["W",3],["S",3],["W",4],["B",5],["FG",40]],[["FG",30],["B",3],["FG",3],["B",8],["W",4],["S",5],["W",1],["S",36],["W",2],["S",19],["W",3],["B",2],["FG",24]],[["FG",24],["B",2],["W",3],["S",5],["W",2],["S",13],["W",2],["S",43],["W",6],["B",10],["FG",30]],[["FG",29],["B",2],["W",2],["B",3],["W",9],["S",43],["W",2],["S",12],["W",4],["S",5],["W",3],["B",3],["FG",23]],[["FG",23],["B",2],["W",3],["S",6],["W",5],["S",11],["W",2],["S",32],["W",1],["S",11],["W",13],["B",2],["FG",29]],[["FG",29],["B",2],["W",5],["S",2],["W",5],["S",12],["W",1],["S",31],["W",2],["S",10],["W",4],["B",1],["W",2],["S",7],["W",2],["B",3],["FG",22]],[["FG",22],["B",3],["W",2],["S",6],["W",3],["B",2],["W",3],["S",11],["W",1],["S",30],["W",2],["S",13],["W",4],["S",3],["W",1],["S",1],["W",3],["B",2],["FG",28]],[["FG",27],["B",3],["W",2],["S",23],["W",2],["S",29],["W",2],["S",10],["W",3],["B",3],["W",3],["S",6],["W",2],["B",3],["FG",22]],[["FG",23],["B",2],["W",3],["S",6],["W",3],["B",2],["W",3],["S",11],["W",1],["S",29],["W",2],["S",23],["W",3],["B",3],["FG",26]],[["FG",25],["B",3],["W",3],["S",23],["W",3],["S",29],["W",1],["S",10],["W",3],["B",3],["W",3],["S",6],["W",3],["B",2],["FG",23]],[["FG",23],["B",2],["W",3],["S",7],["W",2],["B",3],["W",3],["S",40],["W",3],["S",23],["W",4],["B",3],["FG",24]],[["FG",22],["B",3],["W",5],["S",23],["W",3],["S",40],["W",3],["B",4],["W",2],["S",7],["W",3],["B",2],["FG",23]],[["FG",23],["B",3],["W",4],["S",4],["W",3],["B",4],["W",3],["S",40],["W",3],["S",24],["W",5],["B",2],["FG",22]],[["FG",21],["B",2],["W",3],["S",2],["W",1],["S",23],["W",3],["S",40],["W",3],["B",2],["FG",1],["B",3],["W",3],["S",2],["W",4],["B",3],["S",24]],[["FG",25],["B",3],["W",7],["B",3],["FG",2],["B",3],["W",5],["S",37],["W",4],["S",25],["W",3],["B",3],["FG",20]],[["FG",20],["B",2],["W",3],["S",26],["W",3],["S",31],["W",11],["B",3],["FG",4],["B",3],["W",4],["B",3],["FG",27]],[["FG",28],["B",8],["FG",6],["B",5],["W",7],["S",7],["W",1],["S",25],["W",3],["S",6],["W",1],["S",19],["W",2],["B",3],["FG",19]],[["FG",19],["B",3],["W",2],["S",18],["W",2],["S",5],["W",4],["S",24],["W",2],["S",6],["W",3],["B",8],["FG",11],["B",3],["FG",30]],[["FG",48],["B",4],["W",3],["S",6],["W",2],["S",25],["W",3],["S",5],["W",2],["S",18],["W",3],["B",2],["FG",19]],[["FG",16],["B",1],["FG",1],["B",3],["W",2],["S",18],["W",2],["S",5],["W",3],["S",26],["W",2],["S",6],["W",2],["B",3],["FG",50]],[["FG",50],["B",3],["W",2],["S",6],["W",2],["S",26],["W",3],["S",5],["W",2],["S",18],["W",2],["B",2],["FG",1],["B",3],["FG",15]],[["FG",15],["B",6],["W",2],["S",18],["W",2],["S",5],["W",2],["S",27],["W",2],["S",5],["W",3],["B",2],["FG",51]],[["FG",51],["B",3],["W",3],["S",4],["W",2],["S",21],["W",1],["S",5],["W",2],["S",5],["W",2],["S",18],["W",2],["B",7],["FG",14]],[["FG",14],["B",2],["W",2],["B",2],["W",3],["S",18],["W",2],["S",4],["W",3],["S",4],["W",1],["S",22],["W",2],["S",4],["W",3],["B",2],["FG",52]],[["FG",53],["B",2],["W",3],["S",3],["W",2],["S",22],["W",2],["S",4],["W",2],["S",4],["W",2],["S",17],["W",4],["B",2],["W",2],["B",2],["FG",14]],[["FG",14],["B",2],["W",5],["S",1],["W",2],["S",17],["W",2],["S",5],["W",1],["S",4],["W",2],["S",23],["W",2],["S",2],["W",2],["B",3],["FG",53]],[["FG",54],["B",2],["W",3],["S",1],["W",2],["S",23],["W",2],["S",4],["W",1],["S",5],["W",2],["S",17],["W",2],["S",1],["W",2],["S",1],["W",2],["B",7],["FG",9]],[["FG",10],["B",6],["W",2],["S",1],["W",2],["S",21],["W",2],["S",4],["W",1],["S",4],["W",2],["S",23],["W",5],["B",3],["FG",54]],[["FG",55],["B",3],["W",4],["S",23],["W",2],["S",9],["W",2],["S",24],["W",5],["B",3],["FG",10]],[["FG",11],["B",3],["W",2],["S",1],["W",2],["S",24],["W",2],["S",8],["W",2],["S",24],["W",3],["B",2],["FG",56]],[["FG",54],["B",4],["W",3],["S",24],["W",2],["S",7],["W",2],["S",27],["W",2],["B",3],["FG",12]],[["FG",13],["B",2],["W",3],["S",27],["W",1],["S",7],["W",2],["S",25],["W",3],["B",5],["FG",52]],[["FG",52],["B",2],["W",5],["S",26],["W",2],["S",6],["W",1],["S",27],["W",3],["B",2],["FG",14]],[["FG",14],["B",3],["W",3],["S",27],["W",1],["S",6],["W",2],["S",26],["W",4],["B",2],["FG",52]],[["FG",52],["B",2],["W",3],["S",26],["W",3],["S",34],["W",3],["B",2],["FG",15]],[["FG",16],["B",2],["W",3],["S",34],["W",3],["S",25],["W",3],["B",2],["FG",52]],[["FG",53],["B",2],["W",3],["S",19],["W",7],["S",35],["W",3],["B",2],["FG",16]],[["FG",17],["B",2],["W",3],["S",35],["W",6],["S",19],["W",3],["B",2],["FG",53]],[["FG",53],["B",2],["W",4],["S",19],["W",3],["S",37],["W",3],["B",2],["S",17]],[["FG",17],["B",3],["W",2],["S",37],["W",3],["S",18],["W",6],["B",3],["FG",51]],[["FG",52],["B",2],["W",3],["S",1],["W",2],["S",19],["W",3],["S",35],["W",3],["B",2],["FG",18]],[["FG",18],["B",3],["W",2],["S",32],["W",6],["S",18],["W",3],["S",2],["W",3],["B",2],["FG",51]],[["FG",51],["B",3],["W",2],["S",3],["W",3],["S",18],["W",6],["S",30],["W",3],["B",2],["FG",19]],[["FG",19],["B",3],["W",5],["S",6],["W",2],["S",19],["W",6],["S",17],["W",3],["S",4],["W",3],["B",2],["S",51]],[["FG",50],["B",3],["W",2],["S",6],["W",3],["S",17],["W",5],["S",19],["W",2],["S",6],["W",4],["B",3],["FG",20]],[["FG",21],["B",4],["W",3],["S",5],["W",3],["S",18],["W",4],["S",17],["W",3],["S",7],["W",3],["B",2],["FG",50]],[["FG",50],["B",2],["W",3],["S",8],["W",3],["S",16],["W",4],["S",18],["W",2],["S",5],["W",3],["B",3],["FG",23]],[["FG",24],["B",2],["W",3],["S",17],["W",4],["S",5],["W",2],["S",16],["W",3],["S",10],["W",2],["B",2],["FG",50]],[["FG",49],["B",3],["W",2],["S",11],["W",4],["S",15],["W",1],["S",4],["W",6],["S",13],["W",5],["B",3],["FG",24]],[["FG",25],["B",4],["W",4],["S",12],["W",5],["S",20],["W",4],["S",12],["W",2],["B",3],["FG",49]],[["FG",49],["B",3],["W",2],["S",13],["W",5],["S",19],["W",5],["S",10],["W",3],["B",5],["FG",26]],[["FG",28],["B",4],["W",3],["S",9],["W",7],["S",16],["W",7],["S",12],["W",3],["B",2],["FG",49]],[["FG",49],["B",2],["W",3],["S",11],["W",3],["B",3],["W",4],["S",12],["W",5],["S",1],["W",2],["S",10],["W",3],["B",2],["FG",30]],[["FG",30],["B",3],["W",3],["S",11],["W",3],["B",1],["W",2],["S",10],["W",5],["B",5],["W",3],["S",11],["W",2],["B",4],["FG",47]],[["FG",46],["B",4],["W",3],["S",10],["W",3],["B",3],["FG",1],["B",4],["W",4],["S",9],["W",2],["B",2],["W",3],["S",9],["W",3],["B",3],["FG",31]],[["FG",32],["B",3],["W",2],["S",6],["W",5],["B",3],["W",3],["S",8],["W",3],["B",3],["FG",4],["B",3],["W",2],["S",11],["W",4],["B",3],["FG",45]],[["FG",45],["B",2],["W",3],["S",12],["W",3],["B",2],["FG",5],["B",3],["W",3],["S",8],["W",3],["B",5],["W",5],["S",3],["W",3],["B",3],["FG",32]],[["FG",33],["B",3],["W",3],["S",1],["W",3],["B",9],["W",3],["S",8],["W",3],["B",2],["FG",5],["B",3],["W",3],["S",11],["W",3],["B",2],["FG",45]],[["FG",44],["B",3],["W",2],["S",12],["W",3],["B",2],["FG",6],["B",2],["W",2],["S",10],["W",3],["B",3],["FG",2],["B",4],["W",5],["B",3],["FG",34]],[["FG",35],["B",3],["W",3],["B",2],["FG",5],["B",2],["W",3],["S",11],["W",2],["B",2],["FG",6],["B",2],["W",3],["S",12],["W",3],["B",2],["FG",44]],[["FG",44],["B",3],["W",2],["S",11],["W",3],["B",3],["FG",6],["B",2],["W",3],["S",11],["W",2],["B",3],["FG",5],["B",6],["FG",36]],[["FG",37],["B",4],["FG",6],["B",3],["W",3],["S",10],["W",3],["B",2],["FG",7],["B",3],["W",4],["S",9],["W",3],["B",3],["FG",43]],[["FG",43],["B",2],["W",3],["S",10],["W",3],["B",4],["FG",7],["B",2],["W",3],["S",9],["W",4],["B",2],["FG",8],["B",1],["FG",39]],[["FG",48],["B",3],["W",3],["S",10],["W",2],["B",3],["FG",8],["B",3],["W",2],["S",10],["W",3],["B",2],["FG",43]],[["FG",44],["B",2],["W",4],["S",8],["W",3],["B",2],["FG",8],["B",2],["W",3],["S",10],["W",3],["B",2],["S",49]],[["FG",49],["B",2],["W",3],["S",9],["W",3],["B",3],["FG",8],["B",2],["W",3],["S",8],["W",3],["B",3],["FG",44]],[["FG",45],["B",2],["W",3],["S",7],["W",3],["B",3],["FG",9],["B",3],["W",4],["S",7],["W",3],["B",2],["FG",49]],[["FG",50],["B",2],["W",3],["S",2],["W",1],["S",2],["W",4],["B",3],["FG",11],["B",2],["W",4],["S",3],["W",5],["B",3],["FG",45]],[["FG",46],["B",5],["W",8],["B",3],["FG",12],["B",4],["W",9],["B",3],["FG",50]],[["FG",51],["B",3],["W",4],["B",6],["FG",15],["B",4],["W",5],["B",5],["FG",47]],[["FG",49],["B",9],["FG",18],["B",11],["FG",53]],[["FG",53],["B",8],["FG",22],["B",6],["FG",51]],[["FG",82],["B",3],["FG",55]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]],[["FG",140]]];
+
+const COLORS = { FG:'#b6b8b5', B:'#1b1b1b', W:'#f4f1ea', S:'#0a72ab' };
+const NAMES  = { FG:'Feather Gray', B:'Black', W:'White', S:'Sapphire' };
+const NROWS = ROWS.length;       // 167
+const NSTS  = 140;
+const KEY_ROW = 'lions-afghan-row';
+const KEY_FLIP = 'lions-afghan-flip';
+
+// expand a row (index 0-based) into 140 color codes
+function expand(i) {
+  const out = [];
+  for (const [c, n] of ROWS[i]) for (let k = 0; k < n; k++) out.push(c);
+  return out;
+}
+
+// ---- CHART ----
+const canvas = document.getElementById('chartCanvas');
+const ctx = canvas.getContext('2d');
+let mirror = (localStorage.getItem(KEY_FLIP) === '1');
+
+// offscreen base render
+const base = document.createElement('canvas');
+base.width = NROWS; base.height = NSTS;
+const bctx = base.getContext('2d');
+
+function renderBase() {
+  const img = bctx.createImageData(NROWS, NSTS);
+  for (let r = 0; r < NROWS; r++) {
+    let col = expand(r);
+    // reverse even row NUMBERS (r is 0-based => row number r+1; even number => (r+1)%2===0 => r odd)
+    if ((r + 1) % 2 === 0) col = col.slice().reverse();
+    for (let y = 0; y < NSTS; y++) {
+      const hex = COLORS[col[y]];
+      const R = parseInt(hex.substr(1,2),16), G = parseInt(hex.substr(3,2),16), B = parseInt(hex.substr(5,2),16);
+      const x = mirror ? (NROWS - 1 - r) : r;
+      const idx = (y * NROWS + x) * 4;
+      img.data[idx] = R; img.data[idx+1] = G; img.data[idx+2] = B; img.data[idx+3] = 255;
+    }
+  }
+  bctx.putImageData(img, 0, 0);
+}
+
+function drawChart() {
+  ctx.clearRect(0, 0, NROWS, NSTS);
+  ctx.drawImage(base, 0, 0);
+  // highlight current row column
+  const r = state.row - 1;
+  const x = mirror ? (NROWS - 1 - r) : r;
+  ctx.strokeStyle = '#c07a2a';
+  ctx.lineWidth = 1;
+  ctx.strokeRect(x + 0.5, 0.5, 0, NSTS - 1); // thin vertical line
+  ctx.beginPath();
+  ctx.moveTo(x + 0.5, 0); ctx.lineTo(x + 0.5, NSTS);
+  ctx.strokeStyle = 'rgba(192,122,42,0.95)'; ctx.lineWidth = 1; ctx.stroke();
+}
+
+// ---- TRACKER ----
+let state = { row: parseInt(localStorage.getItem(KEY_ROW) || '1', 10) };
+if (!(state.row >= 1 && state.row <= NROWS)) state.row = 1;
+
+const rowNumEl = document.getElementById('rowNum');
+const sideEl = document.getElementById('sideBadge');
+const seqEl = document.getElementById('seq');
+const totalEl = document.getElementById('rowTotal');
+const prevBtn = document.getElementById('prevBtn');
+const nextBtn = document.getElementById('nextBtn');
+
+function renderTracker() {
+  const i = state.row - 1;
+  rowNumEl.textContent = state.row;
+  const isRS = (state.row % 2 === 0);
+  sideEl.textContent = isRS ? 'Right Side (front)' : 'Wrong Side (back)';
+  sideEl.className = 'side-badge ' + (isRS ? 'side-rs' : 'side-ws');
+
+  // Left-handed edition: reverse each row's segment order so the finished
+  // lion faces right (matching the photo) when worked in the natural lefty direction.
+  seqEl.innerHTML = ROWS[i].slice().reverse().map(([c, n]) =>
+    `<span class="seq-chip"><span class="sw" style="background:${COLORS[c]}"></span>` +
+    `<span class="cnt">×${n}</span><span class="cname">${NAMES[c]}</span></span>`
+  ).join('');
+
+  const isSolid = ROWS[i].length === 1;
+  totalEl.textContent = isSolid ? '140 stitches — solid row' : '140 stitches total';
+
+  prevBtn.disabled = (state.row <= 1);
+  nextBtn.disabled = (state.row >= NROWS);
+  localStorage.setItem(KEY_ROW, String(state.row));
+  drawChart();
+}
+
+function go(n) {
+  state.row = Math.max(1, Math.min(NROWS, n));
+  renderTracker();
+}
+
+prevBtn.onclick = () => go(state.row - 1);
+nextBtn.onclick = () => go(state.row + 1);
+document.getElementById('resetBtn').onclick = () => go(1);
+document.getElementById('jumpBtn').onclick = () => {
+  const v = parseInt(document.getElementById('jumpInput').value, 10);
+  if (!isNaN(v)) go(v);
+};
+document.getElementById('jumpInput').addEventListener('keydown', e => {
+  if (e.key === 'Enter') document.getElementById('jumpBtn').click();
+});
+document.getElementById('flipBtn').onclick = () => {
+  mirror = !mirror;
+  localStorage.setItem(KEY_FLIP, mirror ? '1' : '0');
+  renderBase(); drawChart();
+};
+document.getElementById('gotoChartBtn').onclick = () => {
+  document.getElementById('tracker').scrollIntoView({ behavior: 'smooth' });
+};
+// click on chart to select that row
+canvas.addEventListener('click', e => {
+  const rect = canvas.getBoundingClientRect();
+  const cx = Math.floor((e.clientX - rect.left) / rect.width * NROWS);
+  const r = mirror ? (NROWS - cx) : (cx + 1);
+  go(r);
+});
+
+renderBase();
+renderTracker();
+</script>
+</body>
+</html>
