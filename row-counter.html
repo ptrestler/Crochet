@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Crochet Row Counter</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #fdf6f0;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 20px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      padding: 40px 36px;
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+
+    .yarn-icon {
+      font-size: 2.4rem;
+      margin-bottom: 8px;
+    }
+
+    h1 {
+      font-size: 1.5rem;
+      color: #7b4f2e;
+      margin-bottom: 6px;
+    }
+
+    .project-label {
+      font-size: 0.8rem;
+      color: #a08060;
+      margin-bottom: 4px;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .project-name {
+      font-size: 1rem;
+      color: #5a3a1a;
+      border: none;
+      border-bottom: 2px dashed #e0c9b0;
+      background: transparent;
+      text-align: center;
+      width: 100%;
+      padding: 4px 8px;
+      margin-bottom: 30px;
+      outline: none;
+      font-family: inherit;
+    }
+
+    .project-name::placeholder { color: #c8ad94; }
+
+    .row-display {
+      background: #fdf0e0;
+      border-radius: 16px;
+      padding: 28px 20px;
+      margin-bottom: 28px;
+      border: 2px solid #f0d9bc;
+    }
+
+    .row-label {
+      font-size: 0.85rem;
+      color: #a08060;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 8px;
+    }
+
+    .row-number {
+      font-size: 5rem;
+      font-weight: bold;
+      color: #7b4f2e;
+      line-height: 1;
+      transition: transform 0.1s ease;
+    }
+
+    .row-number.bump { transform: scale(1.12); }
+
+    .note-label {
+      font-size: 0.8rem;
+      color: #a08060;
+      margin-top: 10px;
+    }
+
+    .note-input {
+      font-size: 0.9rem;
+      border: none;
+      border-bottom: 1px dashed #e0c9b0;
+      background: transparent;
+      text-align: center;
+      width: 100%;
+      padding: 3px 6px;
+      outline: none;
+      font-family: inherit;
+      color: #5a3a1a;
+    }
+
+    .note-input::placeholder { color: #c8ad94; }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      margin-bottom: 20px;
+    }
+
+    button {
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      font-family: inherit;
+      font-size: 1rem;
+      transition: transform 0.08s, box-shadow 0.08s;
+    }
+
+    button:active { transform: scale(0.95); }
+
+    .btn-decrement {
+      background: #f5e0cc;
+      color: #7b4f2e;
+      width: 60px;
+      height: 60px;
+      font-size: 2rem;
+      border-radius: 50%;
+    }
+
+    .btn-increment {
+      background: #7b4f2e;
+      color: #fff;
+      width: 80px;
+      height: 80px;
+      font-size: 2.6rem;
+      border-radius: 50%;
+      box-shadow: 0 4px 12px rgba(123,79,46,0.30);
+    }
+
+    .btn-increment:hover { background: #6a4026; }
+    .btn-decrement:hover { background: #eecfb0; }
+
+    .secondary-controls {
+      display: flex;
+      gap: 10px;
+      justify-content: center;
+    }
+
+    .btn-secondary {
+      background: #f5f0eb;
+      color: #7b4f2e;
+      padding: 8px 20px;
+      border-radius: 20px;
+      font-size: 0.85rem;
+      border: 1px solid #e8d8c8;
+    }
+
+    .btn-secondary:hover { background: #ede3d8; }
+
+    .history {
+      margin-top: 26px;
+      text-align: left;
+      border-top: 1px solid #f0e0d0;
+      padding-top: 16px;
+    }
+
+    .history h2 {
+      font-size: 0.85rem;
+      color: #a08060;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 10px;
+    }
+
+    .history-list {
+      list-style: none;
+      max-height: 120px;
+      overflow-y: auto;
+      display: flex;
+      flex-direction: column-reverse;
+    }
+
+    .history-list li {
+      font-size: 0.82rem;
+      color: #8a6040;
+      padding: 3px 0;
+      border-bottom: 1px dotted #f0e0d0;
+    }
+
+    .history-list::-webkit-scrollbar { width: 4px; }
+    .history-list::-webkit-scrollbar-thumb { background: #e0c9b0; border-radius: 2px; }
+
+    .no-history { font-size: 0.82rem; color: #c8ad94; font-style: italic; }
+  </style>
+</head>
+<body>
+  <div class="card">
+    <div class="yarn-icon">🧶</div>
+    <h1>Row Counter</h1>
+
+    <p class="project-label">Project</p>
+    <input class="project-name" id="projectName" type="text" placeholder="My crochet project…" maxlength="50" />
+
+    <div class="row-display">
+      <div class="row-label">Current Row</div>
+      <div class="row-number" id="rowNumber">1</div>
+      <div class="note-label">Row note</div>
+      <input class="note-input" id="rowNote" type="text" placeholder="optional note…" maxlength="80" />
+    </div>
+
+    <div class="controls">
+      <button class="btn-decrement" id="btnDecrement" title="Previous row">−</button>
+      <button class="btn-increment" id="btnIncrement" title="Next row">+</button>
+    </div>
+
+    <div class="secondary-controls">
+      <button class="btn-secondary" id="btnReset">Reset</button>
+      <button class="btn-secondary" id="btnClearHistory">Clear History</button>
+    </div>
+
+    <div class="history">
+      <h2>History</h2>
+      <ul class="history-list" id="historyList">
+        <li class="no-history" id="noHistory">No rows logged yet.</li>
+      </ul>
+    </div>
+  </div>
+
+  <script>
+    const KEY = 'crochetCounter';
+
+    function loadState() {
+      try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; }
+    }
+
+    function saveState(state) {
+      localStorage.setItem(KEY, JSON.stringify(state));
+    }
+
+    let state = {
+      row: 1,
+      project: '',
+      history: [],
+      ...loadState()
+    };
+
+    const rowEl       = document.getElementById('rowNumber');
+    const projectEl   = document.getElementById('projectName');
+    const noteEl      = document.getElementById('rowNote');
+    const historyList = document.getElementById('historyList');
+    const noHistory   = document.getElementById('noHistory');
+
+    function render() {
+      rowEl.textContent   = state.row;
+      projectEl.value     = state.project;
+      renderHistory();
+      saveState(state);
+    }
+
+    function renderHistory() {
+      historyList.innerHTML = '';
+      if (state.history.length === 0) {
+        historyList.innerHTML = '<li class="no-history">No rows logged yet.</li>';
+        return;
+      }
+      state.history.forEach(entry => {
+        const li = document.createElement('li');
+        li.textContent = entry;
+        historyList.appendChild(li);
+      });
+    }
+
+    function bump() {
+      rowEl.classList.add('bump');
+      setTimeout(() => rowEl.classList.remove('bump'), 120);
+    }
+
+    function logRow(direction) {
+      const note    = noteEl.value.trim();
+      const project = state.project ? `[${state.project}] ` : '';
+      const time    = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+      const label   = direction === 'next' ? `Row ${state.row}` : `↩ Back to row ${state.row}`;
+      const entry   = `${time} — ${project}${label}${note ? ': ' + note : ''}`;
+      state.history.push(entry);
+      if (state.history.length > 200) state.history.shift();
+    }
+
+    document.getElementById('btnIncrement').addEventListener('click', () => {
+      logRow('next');
+      state.row++;
+      noteEl.value = '';
+      bump();
+      render();
+    });
+
+    document.getElementById('btnDecrement').addEventListener('click', () => {
+      if (state.row <= 1) return;
+      state.row--;
+      logRow('back');
+      noteEl.value = '';
+      bump();
+      render();
+    });
+
+    document.getElementById('btnReset').addEventListener('click', () => {
+      if (!confirm('Reset row counter to 1?')) return;
+      state.row = 1;
+      noteEl.value = '';
+      render();
+    });
+
+    document.getElementById('btnClearHistory').addEventListener('click', () => {
+      if (!confirm('Clear all history?')) return;
+      state.history = [];
+      render();
+    });
+
+    projectEl.addEventListener('input', () => {
+      state.project = projectEl.value;
+      saveState(state);
+    });
+
+    render();
+  </script>
+</body>
+</html>
