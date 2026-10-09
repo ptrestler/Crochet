@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+  <meta name="apple-mobile-web-app-title" content="Skyscape" />
+  <title>Skyscape Raglan Row Counter</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+    body {
+      min-height: 100vh;
+      background: #eef3f8;
+      font-family: Georgia, serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 24px 16px 48px;
+      color: #2a3a4a;
+    }
+    #app { width: 100%; max-width: 420px; display: flex; flex-direction: column; align-items: center; }
+
+    .title-area { text-align: center; margin-bottom: 18px; }
+    .home-link {
+      display: inline-block; margin-bottom: 12px;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: #7d95ad; text-decoration: none; margin-right: 14px;
+    }
+    .home-link:hover { color: #3e6283; }
+    .title-sub { font-size: 11px; letter-spacing: 3px; color: #7d95ad; text-transform: uppercase; margin-bottom: 4px; }
+    h1 { font-size: 28px; color: #2f4a66; font-weight: normal; letter-spacing: 1px; }
+    .title-detail { font-size: 12px; color: #7d95ad; margin-top: 2px; }
+
+    .tabs { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; justify-content: center; }
+    .tab {
+      padding: 6px 13px; border-radius: 20px; border: none; cursor: pointer;
+      font-size: 13px; font-family: Georgia, serif;
+      background: #dde7f0; color: #4d6680;
+      transition: all 0.2s;
+    }
+    .tab.active { color: #fff; font-weight: bold; }
+    .tab.done { text-decoration: line-through; opacity: 0.6; }
+    .tab .step { font-size: 10px; opacity: 0.7; margin-right: 4px; }
+
+    .card {
+      background: #fff; border-radius: 20px; padding: 24px 22px;
+      width: 100%; box-shadow: 0 4px 24px rgba(30,60,90,0.08); text-align: center;
+      margin-bottom: 16px;
+    }
+    .section-name { font-size: 11px; letter-spacing: 2px; text-transform: uppercase; color: #7d95ad; margin-bottom: 10px; }
+
+    .ring-wrap { position: relative; width: 140px; height: 140px; margin: 0 auto 14px; }
+    .ring-num { font-size: 44px; font-weight: bold; color: #2f4a66; line-height: 1; }
+    .ring-label { font-size: 12px; color: #7d95ad; }
+    .ring-center {
+      position: absolute; inset: 0;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+    }
+
+    .badge {
+      display: inline-block; border-radius: 8px; padding: 5px 12px; margin-bottom: 10px;
+      font-size: 12px; font-weight: bold; letter-spacing: 0.5px;
+    }
+    .badge.plain   { background: #f1f5f9; color: #6b7f93; font-weight: normal; }
+    .badge.inc     { background: #fff3e3; color: #b86a1e; }
+    .badge.bodyinc { background: #fdecef; color: #b0485e; }
+    .badge.dec     { background: #e9f3ec; color: #3f7a52; }
+    .badge.setup   { background: #e8eefb; color: #3a5ba8; }
+    .badge.check   { background: #f6efff; color: #7046a8; }
+    .badge.done    { background: #e6f4ea; color: #2f7a45; }
+
+    .instr {
+      border-radius: 12px; padding: 12px 14px; margin-bottom: 10px;
+      font-size: 14px; text-align: left; line-height: 1.6;
+      background: #f6f9fc; border: 1px solid #dbe6f0;
+    }
+    .sts {
+      display: inline-block; margin: 0 0 12px;
+      font-family: Arial, sans-serif; font-size: 13px; font-weight: bold;
+      color: #2f4a66; background: #edf3f9; border: 1px solid #bfd3e6;
+      border-radius: 6px; padding: 4px 12px;
+    }
+    .sts small { display: block; font-weight: normal; font-size: 11px; color: #6b7f93; margin-top: 2px; }
+    .next-box {
+      background: #f3f6f9; border-radius: 10px; padding: 8px 14px; margin-bottom: 14px;
+      font-size: 12px; color: #7d95ad; text-align: left; line-height: 1.5;
+    }
+    .next-box strong { color: #4d6680; }
+
+    .btns { display: flex; gap: 12px; justify-content: center; align-items: center; }
+    .btn-minus, .btn-reset {
+      width: 56px; height: 56px; border-radius: 50%;
+      border: 2px solid #d5e0ea; background: #fff;
+      cursor: pointer; color: #4d6680; font-size: 24px;
+      font-family: Georgia, serif;
+      transition: transform 0.15s;
+    }
+    .btn-minus:disabled { color: #ccc; cursor: not-allowed; }
+    .btn-reset { font-size: 18px; color: #7d95ad; }
+    .btn-plus {
+      width: 76px; height: 76px; border-radius: 50%;
+      border: none; cursor: pointer; color: #fff; font-size: 32px;
+      transition: transform 0.15s;
+    }
+    .btn-minus:active, .btn-reset:active, .btn-plus:active { transform: scale(0.93); }
+    .btn-next {
+      margin-top: 14px; padding: 8px 16px; border-radius: 20px;
+      border: 1px solid #bfd3e6; background: #edf3f9; color: #2f4a66;
+      font-family: Georgia, serif; font-size: 13px; cursor: pointer;
+    }
+
+    .overview {
+      background: #fff; border-radius: 16px; padding: 16px 20px;
+      width: 100%; box-shadow: 0 2px 12px rgba(30,60,90,0.06);
+    }
+    .overview-title {
+      font-size: 11px; letter-spacing: 2px; color: #7d95ad;
+      text-transform: uppercase; margin-bottom: 12px;
+    }
+    .ov-row { cursor: pointer; margin-bottom: 10px; }
+    .ov-label { display: flex; justify-content: space-between; font-size: 12px; color: #4d6680; margin-bottom: 4px; }
+    .ov-track { background: #e8eef4; border-radius: 4px; height: 6px; overflow: hidden; }
+    .ov-fill { height: 100%; border-radius: 4px; transition: width 0.3s ease; }
+    .btn-reset-all {
+      margin-top: 10px; width: 100%; padding: 8px;
+      border: 1px solid #d5e0ea; border-radius: 8px;
+      background: #f6f9fc; font-size: 12px; color: #7d95ad;
+      cursor: pointer; font-family: Georgia, serif;
+    }
+    .hint { font-size: 11px; color: #9aabbc; margin-top: 12px; text-align: center; }
+  </style>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+// ── Pattern logic ──────────────────────────────────────────────
+// Each section's round(r) returns { kind, text, sts, extra? } for round r (r ≥ 1).
+// start() describes what to do before Rnd 1. target is the expected round count (for the ring).
+
+// Yoke schedule, Rnds 1–28: F = full increase (+8), B = body-only increase (+4), P = plain
+const YOKE = "FPFBFPFPFBFPFPFBFPFPFPFPFPFP".split("");
+
+function yokeCounts(r) {
+  let f = 0, b = 0;
+  for (let i = 0; i < Math.min(r, 28); i++) { if (YOKE[i] === "F") f++; if (YOKE[i] === "B") b++; }
+  const body = 26 + 2 * f + 2 * b, sleeve = 12 + 2 * f;
+  return { total: 2 * body + 2 * sleeve + 4, body, sleeve };
+}
+
+const FULL_INC = "*WS in corner st, WS inc in next st, WS to 1 st before next corner, WS inc in next st*; rep 4 times total. Join.";
+const BODY_INC = "Increase on <b>front &amp; back only</b>: WS in corner A, inc in next st, WS to 1 before corner B, inc, WS in corner B, WS across sleeve. WS in corner C, inc, WS to 1 before corner D, inc, WS in corner D, WS across sleeve. Join.";
+const PLAIN = "WS in each st around. Join.";
+
+function ribRound(r, sts, rounds, what) {
+  if (r === 1) return { kind: "setup", text: `5.0 mm hook. Ch 2 (doesn't count), hdc in each st around. Join.`, sts };
+  if (r <= rounds) return {
+    kind: "plain",
+    text: `Ch 2 (doesn't count), *FPdc, BPdc*; rep around. Join.` + (r === rounds ? ` <b>Last round — ${what} done. Fasten off.</b>` : ""),
+    sts,
+  };
+  return null;
+}
+
+function sleeveRound(r) {
+  if (r === 1) return { kind: "setup", text: "Join at the centre of the underarm chain (between ch 3 &amp; 4), working in the unused side. Ch 1, sc in next 3 ch, WS in 40 sleeve sts, sc in last 3 ch. Join.", sts: 46 };
+  const decs = Math.min(Math.floor(r / 7), 7);
+  const sts = 46 - 2 * decs;
+  if (r % 7 === 0 && r <= 49) return { kind: "dec", text: `Decrease round ${r / 7} of 7: WS2tog, WS around to last 2 sts, WS2tog. Join.`, sts };
+  if (r === 60) return { kind: "check", text: "≈ 15″ from underarm. <b>Measure / try on.</b> If long enough, go to the cuff. Otherwise keep working plain rounds.", sts };
+  if (r > 60) return { kind: "plain", text: PLAIN + " Stop when the sleeve is 2″ shorter than you want.", sts };
+  return { kind: "plain", text: PLAIN, sts };
+}
+
+const SECTIONS = [
+  {
+    id: "yoke", label: "Yoke", color: "#3e6283", target: 28, next: 1,
+    start: "Ch 80, join without twisting. <b>Rnd 0:</b> ch 1, sc in each ch (80). Place markers: corner A = st 1, B = 28, C = 41, D = 68. Then tap + for Rnd 1.",
+    round(r) {
+      if (r > 28) return { kind: "check", text: "Extra plain round. Only work this if the yoke is shorter than 7½″ along the raglan line. Once it's deep enough, move on to <b>Body</b>.", sts: 204, extra: "Back/Front 60 · Sleeves 40 · 4 corners" };
+      const t = YOKE[r - 1], c = yokeCounts(r);
+      const kind = t === "F" ? "inc" : t === "B" ? "bodyinc" : "plain";
+      let text = t === "F" ? FULL_INC : t === "B" ? BODY_INC : PLAIN;
+      if (r === 28) text += " <b>Yoke done — measure. You want about 7½–8″ from the neck along a raglan line.</b>";
+      return { kind, text, sts: c.total, extra: `Back/Front ${c.body} · Sleeves ${c.sleeve} each · 4 corners` };
+    },
+  },
+  {
+    id: "body", label: "Body", color: "#4f7fa8", target: 48,
+    start: "Rnd 1 is the split round. Tap + when you start it.",
+    round(r) {
+      if (r === 1) return { kind: "setup", text: "<b>Split:</b> WS in corner A, WS 60 back, WS in corner B (62). Ch 6, skip 40 sleeve sts. WS in corner C, WS 60 front, WS in corner D (62). Ch 6, skip 40 sleeve sts. Join.", sts: 124, extra: "+ 12 underarm ch" };
+      if (r === 2) return { kind: "setup", text: "WS across 62, <b>sc</b> in each of 6 ch, WS across 62, <b>sc</b> in each of 6 ch. Join.", sts: 136 };
+      if (r === 24) return { kind: "check", text: PLAIN + " <b>≈ 6″ from underarm — PAUSE.</b> Put the live loop on a locking marker. Go do the Neck, Sleeves &amp; Cuffs, then come back here.", sts: 136 };
+      if (r === 25) return { kind: "check", text: "Welcome back! <b>Weigh your yarn now</b>, then work 4 plain rounds and weigh again. Reserve = 3 × that difference + 10 g. " + PLAIN, sts: 136 };
+      if (r === 28) return { kind: "check", text: PLAIN + " <b>Weigh again</b> — the difference from round 25 is your per-4-rounds weight.", sts: 136 };
+      if (r === 48) return { kind: "check", text: PLAIN + " ≈ 12″ from underarm. <b>Measure / try on.</b> Stop when it's long enough or you're down to your reserve, then do the Hem.", sts: 136 };
+      if (r > 48) return { kind: "plain", text: PLAIN + " Keep going until you reach your length or your yarn reserve.", sts: 136 };
+      return { kind: "plain", text: PLAIN, sts: 136 };
+    },
+  },
+  {
+    id: "neck", label: "Neck", color: "#5b8fb0", target: 4, fixed: true, next: 3,
+    start: "5.0 mm hook. Join at a back raglan line, working into the unused side of the foundation chain.",
+    round: r => ribRound(r, 80, 4, "neckband"),
+  },
+  { id: "s1", label: "Sleeve 1", color: "#3f8a8f", target: 60, next: 4, start: "6.0 mm hook. Tap + when you start Rnd 1.", round: sleeveRound },
+  { id: "c1", label: "Cuff 1", color: "#5aa3a1", target: 7, fixed: true, next: 5, start: "Switch to the 5.0 mm hook.", round: r => ribRound(r, 32, 7, "cuff") },
+  { id: "s2", label: "Sleeve 2", color: "#3f8a8f", target: 60, next: 6, start: "6.0 mm hook. Work it exactly like Sleeve 1 — match its round count.", round: sleeveRound },
+  { id: "c2", label: "Cuff 2", color: "#5aa3a1", target: 7, fixed: true, next: 1, start: "Switch to the 5.0 mm hook. Match Cuff 1.", round: r => ribRound(r, 32, 7, "cuff") },
+  { id: "hem", label: "Hem", color: "#6a7fb8", target: 7, fixed: true, start: "Body is at length (or at your yarn reserve). Switch to the 5.0 mm hook.", round: r => ribRound(r, 136, 7, "sweater") },
+];
+
+// ── State ──────────────────────────────────────────────────────
+const STORAGE_KEY = 'skyscape-raglan-counter-v1';
+let state = { idx: 0, rows: SECTIONS.map(() => 0) };
+
+function saveState() {
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch (e) {}
+}
+function loadState() {
+  try {
+    const saved = JSON.parse(localStorage.getItem(STORAGE_KEY));
+    if (saved && Array.isArray(saved.rows) && saved.rows.length === SECTIONS.length) {
+      state.rows = saved.rows.map(r => Math.max(0, Number(r) || 0));
+      state.idx = Math.min(Math.max(0, Number(saved.idx) || 0), SECTIONS.length - 1);
+    }
+  } catch (e) {}
+}
+
+// ── Rendering ──────────────────────────────────────────────────
+const BADGES = {
+  plain: "Plain round", inc: "▲ Full increase (+8)", bodyinc: "▲ Body-only increase (+4)",
+  dec: "▼ Decrease round (−2)", setup: "Setup round", check: "◆ Checkpoint",
+};
+
+function arcPath(pct) {
+  const r = 54, cx = 70, cy = 70, start = -Math.PI / 2;
+  if (pct >= 1) return `M ${cx} ${cy - r} A ${r} ${r} 0 1 1 ${cx - 0.001} ${cy - r}`;
+  const angle = start + pct * 2 * Math.PI;
+  const x1 = cx + r * Math.cos(start), y1 = cy + r * Math.sin(start);
+  const x2 = cx + r * Math.cos(angle), y2 = cy + r * Math.sin(angle);
+  return `M ${x1} ${y1} A ${r} ${r} 0 ${pct > 0.5 ? 1 : 0} 1 ${x2} ${y2}`;
+}
+
+function nextSpecial(sec, r) {
+  const last = sec.fixed ? sec.target : sec.target + 1;
+  for (let i = r + 1; i <= last; i++) {
+    const info = sec.round(i);
+    if (info.kind !== "plain" || i === r + 1) return { r: i, info };
+  }
+  return null;
+}
+
+function isDone(i) {
+  const sec = SECTIONS[i];
+  return sec.fixed ? state.rows[i] >= sec.target : i === 1 && state.rows[7] > 0;
+}
+
+function render() {
+  const { idx, rows } = state;
+  const sec = SECTIONS[idx];
+  const r = rows[idx];
+  const info = r > 0 ? sec.round(r) : null;
+  const pct = Math.min(r / sec.target, 1);
+  const ringColor = info && info.kind === "inc" ? "#d08a3a" : info && info.kind === "bodyinc" ? "#c85f76" : sec.color;
+  const nxt = nextSpecial(sec, r);
+
+  document.getElementById('app').innerHTML = `
+    <div class="title-area">
+      <a href="index.html" class="home-link">← Home</a><a href="skyscape_raglan.html" class="home-link">Pattern →</a>
+      <div class="title-sub">ptrestler</div>
+      <h1>Skyscape Raglan</h1>
+      <div class="title-detail">Row Counter · Size S/M · in 6-ball work order</div>
+    </div>
+
+    <div class="tabs">
+      ${SECTIONS.map((s, i) => `
+        <button class="tab ${i === idx ? 'active' : ''} ${isDone(i) && i !== idx ? 'done' : ''}"
+          style="${i === idx ? `background:${s.color};box-shadow:0 2px 8px ${s.color}66;` : ''}"
+          onclick="selectSection(${i})"><span class="step">${i + 1}</span>${s.label}</button>
+      `).join('')}
+    </div>
+
+    <div class="card">
+      <div class="section-name">${sec.label}</div>
+      <div class="ring-wrap">
+        <svg width="140" height="140" viewBox="0 0 140 140" aria-hidden="true">
+          <circle cx="70" cy="70" r="54" fill="none" stroke="#e8eef4" stroke-width="8"/>
+          ${r > 0 ? `<path d="${arcPath(pct)}" fill="none" stroke="${ringColor}" stroke-width="8" stroke-linecap="round"/>` : ''}
+        </svg>
+        <div class="ring-center">
+          <div class="ring-num">${r}</div>
+          <div class="ring-label">${r > sec.target ? 'round (past target)' : `round of ~${sec.target}`}</div>
+        </div>
+      </div>
+
+      ${info ? `
+        <div class="badge ${info.kind}">${BADGES[info.kind]}</div>
+        <div class="instr"><b>Rnd ${r}:</b> ${info.text}</div>
+        <div class="sts">${info.sts} sts${info.extra ? `<small>${info.extra}</small>` : ''}</div>
+      ` : `
+        <div class="badge setup">Not started</div>
+        <div class="instr">${sec.start}</div>
+      `}
+
+      ${nxt ? `
+        <div class="next-box"><strong>Next${nxt.r === r + 1 ? '' : ' special'}: Rnd ${nxt.r}</strong> — ${BADGES[nxt.info.kind]} · ${nxt.info.sts} sts</div>
+      ` : ''}
+
+      <div class="btns">
+        <button class="btn-minus" onclick="step(-1)" ${r === 0 ? 'disabled' : ''} aria-label="Back one round">−</button>
+        <button class="btn-plus" style="background:${sec.color};box-shadow:0 4px 16px ${sec.color}55;" onclick="step(1)" aria-label="Next round">+</button>
+        <button class="btn-reset" onclick="resetSection()" title="Reset this section" aria-label="Reset this section">↺</button>
+      </div>
+
+      ${sec.next !== undefined && r >= sec.target ? `
+        <button class="btn-next" onclick="selectSection(${sec.next})">Go to ${SECTIONS[sec.next].label} →</button>
+      ` : ''}
+      ${idx === 1 && r === 24 ? `<button class="btn-next" onclick="selectSection(2)">Pause body → go to Neck</button>` : ''}
+      ${idx === 1 && r >= 48 ? `<button class="btn-next" onclick="selectSection(7)">Body at length → go to Hem</button>` : ''}
+      ${sec.fixed && r >= sec.target && sec.next === undefined ? `<div class="hint" style="font-size:14px;color:#2f7a45;">🎉 Sweater finished — weave in ends &amp; steam block.</div>` : ''}
+    </div>
+
+    <div class="overview">
+      <div class="overview-title">Progress</div>
+      ${SECTIONS.map((s, i) => `
+        <div class="ov-row" onclick="selectSection(${i})">
+          <div class="ov-label">
+            <span style="${i === idx ? 'font-weight:bold;' : ''}">${i + 1}. ${s.label}</span>
+            <span style="color:#7d95ad;">${isDone(i) ? 'done' : `rnd ${rows[i]}`}</span>
+          </div>
+          <div class="ov-track"><div class="ov-fill" style="width:${Math.min(rows[i] / s.target, 1) * 100}%;background:${s.color};"></div></div>
+        </div>
+      `).join('')}
+      <button class="btn-reset-all" onclick="resetAll()">Reset All</button>
+    </div>
+    <div class="hint">Keyboard: Space / → next round · ← back</div>
+  `;
+}
+
+// ── Actions ────────────────────────────────────────────────────
+function selectSection(i) { state.idx = i; saveState(); render(); window.scrollTo({ top: 0 }); }
+
+function step(d) {
+  const i = state.idx, sec = SECTIONS[i];
+  const r = state.rows[i];
+  if (d < 0 && r === 0) return;
+  if (d > 0 && sec.fixed && r >= sec.target) return;
+  state.rows[i] = r + d;
+  saveState(); render();
+}
+
+function resetSection() {
+  if (!confirm(`Reset ${SECTIONS[state.idx].label} to round 0?`)) return;
+  state.rows[state.idx] = 0; saveState(); render();
+}
+
+function resetAll() {
+  if (!confirm('Reset every section?')) return;
+  state = { idx: 0, rows: SECTIONS.map(() => 0) }; saveState(); render();
+}
+
+document.addEventListener('keydown', e => {
+  if (e.key === ' ' || e.key === 'ArrowRight' || e.key === 'ArrowUp') { e.preventDefault(); step(1); }
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') { e.preventDefault(); step(-1); }
+});
+
+loadState();
+render();
+</script>
+</body>
+</html>
