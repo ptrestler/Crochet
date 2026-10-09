@@ -1,0 +1,800 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skyscape Raglan — Pattern</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green-dark:   #2f4a66;
+      --green-mid:    #3e6283;
+      --green-light:  #6f9cc4;
+      --green-pale:   #edf3f9;
+      --green-border: #bfd3e6;
+      --cream:        #faf7f2;
+      --warm-white:   #ffffff;
+      --text:         #2e2e2e;
+      --text-soft:    #5a5a5a;
+      --text-muted:   #888888;
+      --accent:       #c07a2a;
+      --border:       #e0d8cc;
+      --radius:       10px;
+    }
+
+    body {
+      font-family: Georgia, 'Times New Roman', serif;
+      background: var(--cream);
+      color: var(--text);
+      line-height: 1.7;
+      font-size: 16px;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--green-dark);
+      color: #fff;
+      text-align: center;
+      padding: 48px 24px 36px;
+    }
+    .site-header .home-link {
+      display: inline-block;
+      font-size: 11px; letter-spacing: 2px; text-transform: uppercase;
+      color: #8fb0cf; text-decoration: none;
+      margin-bottom: 20px;
+    }
+    .site-header .home-link:hover { color: #b5cfe6; }
+    .site-header .eyebrow {
+      font-size: 11px;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #b5cfe6;
+      margin-bottom: 12px;
+    }
+    .site-header h1 {
+      font-size: clamp(36px, 7vw, 66px);
+      font-weight: normal;
+      letter-spacing: 6px;
+      margin-bottom: 10px;
+    }
+    .site-header .subtitle {
+      font-size: clamp(14px, 2.5vw, 18px);
+      color: #d4e4f2;
+      font-style: italic;
+      margin-bottom: 4px;
+    }
+    .site-header .attrib {
+      font-size: 12px;
+      color: #8fb0cf;
+      margin-top: 8px;
+    }
+
+    /* ── LAYOUT ── */
+    .container {
+      max-width: 820px;
+      margin: 0 auto;
+      padding: 40px 24px 80px;
+    }
+
+    /* ── SUMMARY BOX ── */
+    .summary-box {
+      background: var(--green-pale);
+      border: 2px solid var(--green-border);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin: 36px 0;
+    }
+    .summary-box h2 {
+      font-size: 15px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--green-mid);
+      margin-bottom: 14px;
+    }
+    .summary-box ul {
+      list-style: none;
+      padding: 0;
+    }
+    .summary-box ul li {
+      padding: 4px 0;
+      padding-left: 20px;
+      position: relative;
+      font-size: 15px;
+      color: var(--text-soft);
+    }
+    .summary-box ul li::before { content: "→"; position: absolute; left: 0; color: var(--green-light); }
+
+    /* ── SECTION HEADINGS ── */
+    .section { margin-top: 52px; }
+    .section-title {
+      font-size: clamp(20px, 4vw, 26px);
+      color: var(--green-dark);
+      font-weight: normal;
+      letter-spacing: 2px;
+      border-bottom: 2px solid var(--green-border);
+      padding-bottom: 8px;
+      margin-bottom: 24px;
+    }
+    .sub-title {
+      font-size: 17px;
+      color: var(--green-mid);
+      font-weight: bold;
+      margin: 28px 0 10px;
+    }
+
+    /* ── TABLES ── */
+    .pattern-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 16px 0;
+      font-size: 14px;
+    }
+    .pattern-table th {
+      background: var(--green-mid);
+      color: #fff;
+      padding: 10px 14px;
+      text-align: left;
+      font-weight: normal;
+      letter-spacing: 0.5px;
+    }
+    .pattern-table td {
+      padding: 10px 14px;
+      border-bottom: 1px solid var(--border);
+    }
+    .pattern-table tr:nth-child(even) td { background: #f8f5f0; }
+    .pattern-table tr:last-child td { border-bottom: none; }
+
+    /* ── STEPS ── */
+    .steps { margin-top: 16px; }
+    .step-item {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 20px;
+      align-items: flex-start;
+    }
+    .step-num {
+      flex-shrink: 0;
+      width: 34px; height: 34px;
+      background: var(--green-mid);
+      color: #fff;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 13px;
+      font-family: Arial, sans-serif;
+      margin-top: 2px;
+      cursor: pointer;
+      user-select: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .step-num:hover { transform: scale(1.1); }
+    .step-item.checked .step-num { background: #888; }
+    .step-item.checked .step-body { opacity: 0.4; }
+    .step-body { flex: 1; }
+    .step-body p { margin-bottom: 8px; }
+
+    /* ── FORMULA BOX ── */
+    .formula-box {
+      background: var(--warm-white);
+      border: 2px solid var(--green-border);
+      border-radius: var(--radius);
+      padding: 16px 20px;
+      margin: 12px 0 16px;
+      font-family: Arial, sans-serif;
+      font-size: 15px;
+      color: var(--green-dark);
+    }
+    .formula-box .formula-line {
+      margin-bottom: 6px;
+    }
+    .formula-box .formula-line:last-child { margin-bottom: 0; }
+    .formula-label {
+      font-size: 11px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 8px;
+      font-family: Georgia, serif;
+    }
+
+    /* ── STITCH CALLOUT ── */
+    .stitch-count {
+      display: inline-block;
+      background: var(--green-pale);
+      border: 1px solid var(--green-border);
+      border-radius: 6px;
+      padding: 3px 12px;
+      font-size: 14px;
+      color: var(--green-dark);
+      font-weight: bold;
+      margin: 4px 0 8px;
+      font-family: Arial, sans-serif;
+    }
+
+    /* ── NOTES / TIPS ── */
+    .note {
+      background: #fff9f0;
+      border-left: 3px solid var(--accent);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 14px;
+      margin: 8px 0 12px;
+      font-size: 14px;
+      color: var(--text-soft);
+      font-style: italic;
+    }
+    .tip {
+      background: var(--green-pale);
+      border-left: 3px solid var(--green-light);
+      border-radius: 0 6px 6px 0;
+      padding: 8px 14px;
+      margin: 8px 0 12px;
+      font-size: 14px;
+      color: var(--green-dark);
+    }
+    .tip::before { content: "▶  "; }
+
+    /* ── MATERIALS LIST ── */
+    .mat-list {
+      list-style: none;
+      padding: 0;
+      columns: 2;
+      column-gap: 32px;
+    }
+    @media (max-width: 500px) { .mat-list { columns: 1; } }
+    .mat-list li {
+      padding: 5px 0 5px 20px;
+      position: relative;
+      font-size: 15px;
+      break-inside: avoid;
+    }
+    .mat-list li::before { content: "•"; position: absolute; left: 0; color: var(--green-light); }
+
+    /* ── ABBREV LIST ── */
+    .abbrev-list {
+      list-style: none;
+      padding: 0;
+      columns: 2;
+      column-gap: 32px;
+    }
+    @media (max-width: 500px) { .abbrev-list { columns: 1; } }
+    .abbrev-list li {
+      padding: 4px 0 4px 0;
+      font-size: 15px;
+      break-inside: avoid;
+    }
+    .abbrev-list li strong {
+      color: var(--green-dark);
+      font-family: Arial, sans-serif;
+      margin-right: 6px;
+    }
+
+    /* ── PART HEADER ── */
+    .part-header {
+      background: var(--green-dark);
+      color: #fff;
+      border-radius: var(--radius);
+      padding: 18px 24px;
+      margin-bottom: 24px;
+    }
+    .part-header .part-label {
+      font-size: 11px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #b5cfe6;
+      margin-bottom: 4px;
+    }
+    .part-header h2 {
+      font-size: 22px;
+      font-weight: normal;
+    }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      text-align: center;
+      padding: 32px 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      border-top: 1px solid var(--border);
+      font-style: italic;
+      margin-top: 60px;
+    }
+
+    /* ── NAV ── */
+    .toc {
+      background: var(--warm-white);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 20px 24px;
+      margin: 24px 0;
+    }
+    .toc h2 {
+      font-size: 12px;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+    }
+    .toc a {
+      display: block;
+      color: var(--green-mid);
+      text-decoration: none;
+      padding: 3px 0;
+      font-size: 15px;
+    }
+    .toc a:hover { color: var(--green-dark); text-decoration: underline; }
+
+    p { margin-bottom: 10px; }
+
+    .reset-btn {
+      display: inline-block;
+      margin-top: 32px;
+      padding: 8px 20px;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      background: #fff;
+      color: var(--text-muted);
+      font-size: 13px;
+      font-family: Georgia, serif;
+      cursor: pointer;
+    }
+    .reset-btn:hover { background: #f5f0ea; }
+  </style>
+</head>
+<body>
+
+<!-- ══ HEADER ══ -->
+<header class="site-header">
+  <a href="index.html" class="home-link">← Home</a>
+  <div class="eyebrow">ptrestler</div>
+  <h1>Skyscape Raglan</h1>
+  <div class="subtitle">Top-Down Waistcoat Stitch Raglan Sweater · Size S/M</div>
+  <div class="attrib">Seamless · Worked in joined rounds · Right side always facing</div>
+</header>
+
+<div class="container">
+
+  <div class="summary-box">
+    <h2>At a Glance</h2>
+    <ul>
+      <li>Finished chest: 39″ (fits bust 32–36″ with 3–7″ ease)</li>
+      <li>Length: about 22″ shoulder to hem · Sleeve: about 17″ underarm to cuff</li>
+      <li>Built top-down in one piece: neckline → raglan yoke → body → sleeves → ribbing</li>
+      <li>No seams, no turning — waistcoat stitch is worked with the right side facing every round</li>
+    </ul>
+  </div>
+
+  <!-- ══ TABLE OF CONTENTS ══ -->
+  <nav class="toc">
+    <h2>Contents</h2>
+    <a href="#materials">Materials</a>
+    <a href="#gauge">Gauge</a>
+    <a href="#abbreviations">Abbreviations &amp; Stitches</a>
+    <a href="#foundation">Part 1: Neckline Foundation</a>
+    <a href="#yoke">Part 2: Raglan Yoke</a>
+    <a href="#split">Part 3: Splitting Body &amp; Sleeves</a>
+    <a href="#body">Part 4: Body</a>
+    <a href="#sleeves">Part 5: Sleeves (make 2)</a>
+    <a href="#finishing">Part 6: Neckband &amp; Finishing</a>
+    <a href="#fit">Fit Adjustments</a>
+  </nav>
+
+  <!-- ══ MATERIALS ══ -->
+  <section class="section" id="materials">
+    <h2 class="section-title">Materials</h2>
+    <ul class="mat-list">
+      <li>Loops &amp; Threads Skyscape (acrylic blend)</li>
+      <li>Approx. 1,500–1,800 yds total</li>
+      <li>Hook: 6.0 mm (J-10) — body</li>
+      <li>Hook: 5.0 mm (H-8) — ribbing</li>
+      <li>4 locking stitch markers (raglan corners)</li>
+      <li>1 marker in a contrast colour (start of round)</li>
+      <li>Tapestry needle</li>
+      <li>Measuring tape</li>
+    </ul>
+    <div class="note">This pattern assumes Skyscape is a medium (#4 / worsted) weight. Check your ball band: if it says #5 bulky or #3 light, the stitch counts below won't match — swatch first and adjust (see Gauge). Waistcoat stitch is yarn-hungry, so buy by yardage, not ball count, and grab an extra ball from the same dye lot.</div>
+  </section>
+
+  <!-- ══ GAUGE ══ -->
+  <section class="section" id="gauge">
+    <h2 class="section-title">Gauge</h2>
+    <table class="pattern-table">
+      <thead>
+        <tr><th>Hook</th><th>Stitch</th><th>4″ × 4″</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>6.0 mm</td><td>Waistcoat stitch, in the round</td><td>14 sts × 16 rounds</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Swatch in the round</strong> (ch 40, join, work 16 rounds) — waistcoat stitch looks different worked flat because you'd be turning.</p>
+    <div class="tip">Too many stitches per 4″? Go up a hook size. Too few? Go down. Waistcoat stitch is naturally tight; most people need 1–2 hook sizes larger than the ball band suggests.</div>
+    <div class="note">Gauge matters here — this is a stitch-count pattern. Every 1 st/4″ off changes the chest by about 3″.</div>
+  </section>
+
+  <!-- ══ ABBREVIATIONS ══ -->
+  <section class="section" id="abbreviations">
+    <h2 class="section-title">Abbreviations &amp; Stitches (US Terms)</h2>
+    <ul class="abbrev-list">
+      <li><strong>Ch</strong> Chain</li>
+      <li><strong>Sl st</strong> Slip stitch</li>
+      <li><strong>Sc</strong> Single crochet</li>
+      <li><strong>Hdc</strong> Half double crochet</li>
+      <li><strong>WS</strong> Waistcoat stitch</li>
+      <li><strong>WS inc</strong> 2 WS in the same st</li>
+      <li><strong>WS2tog</strong> Waistcoat decrease</li>
+      <li><strong>FPdc</strong> Front post double crochet</li>
+      <li><strong>BPdc</strong> Back post double crochet</li>
+      <li><strong>Rnd</strong> Round</li>
+      <li><strong>St(s)</strong> Stitch(es)</li>
+      <li><strong>Rep</strong> Repeat</li>
+    </ul>
+
+    <div class="sub-title">Waistcoat Stitch (WS)</div>
+    <p>Look at the sc below: each one forms a "V" with two vertical legs. Insert your hook <strong>through the centre of the V</strong>, between the two legs and under the horizontal strands, so the hook comes out the back of the fabric. Yarn over, pull up a loop, yarn over, pull through both loops. It's a sc in a different spot — and it looks like knit stockinette.</p>
+    <div class="tip">Pull your loop up a little taller than you would for a normal sc. If it's a fight to get the hook into the V, your tension is too tight.</div>
+
+    <div class="sub-title">Waistcoat Decrease (WS2tog)</div>
+    <p>Insert hook in the centre of the next V, pull up a loop; insert in the centre of the following V, pull up a loop; yarn over and pull through all 3 loops.</p>
+
+    <div class="sub-title">Joining Rounds</div>
+    <p>Every round: at the end, <strong>sl st into the first st</strong>, ch 1 (does not count as a st), and work the first WS of the next round into the same st you joined to. <strong>Do not turn.</strong> Move the start-of-round marker up each round.</p>
+  </section>
+
+  <!-- ══ PART 1: FOUNDATION ══ -->
+  <section class="section" id="foundation">
+    <div class="part-header">
+      <div class="part-label">Part 1</div>
+      <h2>Neckline Foundation</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <p>With the 6.0 mm hook, ch 80. Sl st to the first ch to form a ring, making sure the chain is not twisted.</p>
+          <div class="tip">Lay the chain flat and check it isn't twisted before closing the ring. Neck opening ≈ 23″ — it needs to go over your head.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <p><strong>Rnd 0:</strong> Ch 1, sc in each ch around. Join. <span class="stitch-count">80 sts</span></p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <p><strong>Place markers.</strong> Counting from the first st of the round, mark the 4 raglan "corner" stitches:</p>
+          <table class="pattern-table">
+            <thead><tr><th>Stitches</th><th>Section</th></tr></thead>
+            <tbody>
+              <tr><td>St 1</td><td><strong>Corner A</strong> (marker)</td></tr>
+              <tr><td>Sts 2–27</td><td>Back — 26 sts</td></tr>
+              <tr><td>St 28</td><td><strong>Corner B</strong> (marker)</td></tr>
+              <tr><td>Sts 29–40</td><td>Sleeve 1 — 12 sts</td></tr>
+              <tr><td>St 41</td><td><strong>Corner C</strong> (marker)</td></tr>
+              <tr><td>Sts 42–67</td><td>Front — 26 sts</td></tr>
+              <tr><td>St 68</td><td><strong>Corner D</strong> (marker)</td></tr>
+              <tr><td>Sts 69–80</td><td>Sleeve 2 — 12 sts</td></tr>
+            </tbody>
+          </table>
+          <div class="note">Every round begins with the corner A stitch. When you work into a marked corner stitch, move its marker up to the new stitch.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 2: YOKE ══ -->
+  <section class="section" id="yoke">
+    <div class="part-header">
+      <div class="part-label">Part 2</div>
+      <h2>Raglan Yoke</h2>
+    </div>
+
+    <p>There are three kinds of yoke rounds. Follow the chart below to see which one each round is.</p>
+
+    <div class="formula-box">
+      <div class="formula-label">Full increase round (+8 sts)</div>
+      <div class="formula-line">*WS in corner st, WS inc in next st, WS to 1 st before next corner, WS inc in next st*; rep * to * 4 times total. Join.</div>
+    </div>
+    <div class="formula-box">
+      <div class="formula-label">Body increase round (+4 sts)</div>
+      <div class="formula-line">WS in corner A, WS inc in next st, WS to 1 st before corner B, WS inc in next st, WS in corner B, WS across sleeve. WS in corner C, WS inc in next st, WS to 1 st before corner D, WS inc in next st, WS in corner D, WS across sleeve to end. Join.</div>
+      <div class="formula-line"><em>(Only the front and back increase — this gives the body extra width without making the sleeves too wide.)</em></div>
+    </div>
+    <div class="formula-box">
+      <div class="formula-label">Plain round (no increase)</div>
+      <div class="formula-line">WS in each st around. Join.</div>
+    </div>
+
+    <div class="sub-title">Yoke Round Chart</div>
+    <table class="pattern-table">
+      <thead><tr><th>Rnd</th><th>Type</th><th>Total sts</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Full increase</td><td>88</td></tr>
+        <tr><td>2</td><td>Plain</td><td>88</td></tr>
+        <tr><td>3</td><td>Full increase</td><td>96</td></tr>
+        <tr><td>4</td><td>Body increase</td><td>100</td></tr>
+        <tr><td>5</td><td>Full increase</td><td>108</td></tr>
+        <tr><td>6</td><td>Plain</td><td>108</td></tr>
+        <tr><td>7</td><td>Full increase</td><td>116</td></tr>
+        <tr><td>8</td><td>Plain</td><td>116</td></tr>
+        <tr><td>9</td><td>Full increase</td><td>124</td></tr>
+        <tr><td>10</td><td>Body increase</td><td>128</td></tr>
+        <tr><td>11</td><td>Full increase</td><td>136</td></tr>
+        <tr><td>12</td><td>Plain</td><td>136</td></tr>
+        <tr><td>13</td><td>Full increase</td><td>144</td></tr>
+        <tr><td>14</td><td>Plain</td><td>144</td></tr>
+        <tr><td>15</td><td>Full increase</td><td>152</td></tr>
+        <tr><td>16</td><td>Body increase</td><td>156</td></tr>
+        <tr><td>17</td><td>Full increase</td><td>164</td></tr>
+        <tr><td>18</td><td>Plain</td><td>164</td></tr>
+        <tr><td>19</td><td>Full increase</td><td>172</td></tr>
+        <tr><td>20</td><td>Plain</td><td>172</td></tr>
+        <tr><td>21</td><td>Full increase</td><td>180</td></tr>
+        <tr><td>22</td><td>Plain</td><td>180</td></tr>
+        <tr><td>23</td><td>Full increase</td><td>188</td></tr>
+        <tr><td>24</td><td>Plain</td><td>188</td></tr>
+        <tr><td>25</td><td>Full increase</td><td>196</td></tr>
+        <tr><td>26</td><td>Plain</td><td>196</td></tr>
+        <tr><td>27</td><td>Full increase</td><td>204</td></tr>
+        <tr><td>28</td><td>Plain</td><td>204</td></tr>
+      </tbody>
+    </table>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <p>Work <strong>Rnds 1–28</strong> following the chart.</p>
+          <span class="stitch-count">204 sts: Back 60 · Front 60 · Sleeves 40 each · 4 corners</span>
+          <div class="tip">Check your count at the end of each round — on the body-increase rounds especially, it's easy to put an increase on a sleeve by mistake.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <p><strong>Check yoke depth.</strong> Measure straight down from the foundation chain along a raglan line. You want about <strong>7½–8″</strong>. If it's short, work plain rounds until it's long enough (stitch counts don't change).</p>
+          <div class="tip">Best check: slip the yoke on. The raglan lines should reach your armpits without pulling.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 3: SPLIT ══ -->
+  <section class="section" id="split">
+    <div class="part-header">
+      <div class="part-label">Part 3</div>
+      <h2>Splitting Body &amp; Sleeves</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <p><strong>Split round:</strong> WS in corner A, WS across 60 back sts, WS in corner B. <em>(62 back sts)</em></p>
+          <p>Ch 6, skip the 40 sleeve sts, then WS in corner C, WS across 60 front sts, WS in corner D. <em>(62 front sts)</em></p>
+          <p>Ch 6, skip the 40 remaining sleeve sts, then join with a sl st to the first st.</p>
+          <div class="note">The corner stitches go to the body; the sleeve stitches stay live and you'll come back for them in Part 5. You can remove markers B, C, D — keep the start-of-round marker.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <p><strong>Next round:</strong> WS across 62 back sts, <strong>sc</strong> in each of the 6 underarm ch, WS across 62 front sts, <strong>sc</strong> in each of the 6 underarm ch. Join. <span class="stitch-count">136 sts</span></p>
+          <div class="tip">There's no V to work into on a chain, so use a regular sc there. From the next round on, they're V's like everything else.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 4: BODY ══ -->
+  <section class="section" id="body">
+    <div class="part-header">
+      <div class="part-label">Part 4</div>
+      <h2>Body</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">8</div>
+        <div class="step-body">
+          <p>WS in each st around, joining each round. <span class="stitch-count">136 sts</span></p>
+          <p>Continue until the body measures <strong>12″ from the underarm</strong>, or 2″ less than your desired finished length.</p>
+          <div class="note">Every 4 rounds ≈ 1″. For a cropped fit, stop around 8″; for a longer, tunic-style fit, go to 15″+ (add yardage).</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-title">Hem Ribbing</div>
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">9</div>
+        <div class="step-body">
+          <p>Switch to the <strong>5.0 mm hook</strong>.</p>
+          <p><strong>Rib Rnd 1:</strong> Ch 2 (doesn't count), hdc in each st around. Join. <span class="stitch-count">136 sts</span></p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">10</div>
+        <div class="step-body">
+          <p><strong>Rib Rnds 2–7:</strong> Ch 2 (doesn't count), *FPdc around next st, BPdc around next st*; rep around. Join.</p>
+          <p>Fasten off and weave in the end.</p>
+          <div class="tip">If the ribbing flares out, redo Rib Rnd 1 with 16 hdc2tog spaced evenly (about every 8 sts) for 120 sts.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 5: SLEEVES ══ -->
+  <section class="section" id="sleeves">
+    <div class="part-header">
+      <div class="part-label">Part 5</div>
+      <h2>Sleeves (make 2)</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">11</div>
+        <div class="step-body">
+          <p>With the 6.0 mm hook, join yarn at the <strong>centre of the underarm chain</strong> (between the 3rd and 4th ch), working into the unused side of the chain.</p>
+          <p><strong>Rnd 1:</strong> Ch 1, sc in each of the next 3 ch, WS in each of the 40 sleeve sts, sc in each of the last 3 ch. Join. <span class="stitch-count">46 sts</span></p>
+          <div class="tip">If you see a small hole where the sleeve meets the underarm, pick up an extra st there to close it, then WS2tog it away on Rnd 2.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">12</div>
+        <div class="step-body">
+          <p><strong>Rnds 2–6:</strong> WS in each st around. <span class="stitch-count">46 sts</span></p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">13</div>
+        <div class="step-body">
+          <p><strong>Decrease round (Rnd 7):</strong> WS2tog, WS around to last 2 sts, WS2tog. Join. <span class="stitch-count">44 sts</span></p>
+          <p>Work 6 plain rounds, then another decrease round. Repeat this (decrease every 7th round) until you've worked <strong>7 decrease rounds</strong> total. <span class="stitch-count">32 sts</span></p>
+          <div class="note">Decreases land at the start-of-round — the centre of the underarm — so they stay hidden.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">14</div>
+        <div class="step-body">
+          <p>Work plain rounds until the sleeve measures <strong>15″ from the underarm</strong>, or 2″ less than your desired length.</p>
+          <div class="tip">Try it on with your arm slightly bent — that's the length you'll see when wearing it.</div>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">15</div>
+        <div class="step-body">
+          <p><strong>Cuff:</strong> Switch to the 5.0 mm hook. Work Rib Rnd 1 (hdc around, 32 sts), then Rib Rnds 2–7 (FPdc/BPdc) as for the hem. Fasten off.</p>
+        </div>
+      </div>
+
+      <div class="step-item">
+        <div class="step-num">16</div>
+        <div class="step-body">
+          <p>Repeat Steps 11–15 for the second sleeve.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ PART 6: FINISHING ══ -->
+  <section class="section" id="finishing">
+    <div class="part-header">
+      <div class="part-label">Part 6</div>
+      <h2>Neckband &amp; Finishing</h2>
+    </div>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">17</div>
+        <div class="step-body">
+          <p>With the 5.0 mm hook, join yarn at a back raglan line, working into the unused side of the foundation chain.</p>
+          <p><strong>Neck Rnd 1:</strong> Ch 2 (doesn't count), hdc in each ch around. Join. <span class="stitch-count">80 sts</span></p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">18</div>
+        <div class="step-body">
+          <p><strong>Neck Rnds 2–4:</strong> *FPdc, BPdc*; rep around. Join. Fasten off.</p>
+          <div class="note">For a wider neckline, skip the neckband and just work 1 round of sc. For a mock-neck, work 8–10 rib rounds instead of 3.</div>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">19</div>
+        <div class="step-body">
+          <p>Close any gaps at the underarms with the yarn tails. Weave in all ends.</p>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">20</div>
+        <div class="step-body">
+          <p><strong>Block:</strong> Acrylic blends respond best to steam. Lay the sweater flat, hover a steam iron above it (don't press down), pat into shape and let it cool and dry fully before moving it. This relaxes the waistcoat stitch and improves drape.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ══ FIT ══ -->
+  <section class="section" id="fit">
+    <h2 class="section-title">Fit Adjustments</h2>
+    <table class="pattern-table">
+      <thead><tr><th>Want to change…</th><th>Do this</th></tr></thead>
+      <tbody>
+        <tr><td>Chest roomier (≈ +2″)</td><td>Use 10 underarm ch instead of 6 (body 144 sts). Sleeves start at 50 sts; add 2 more decrease rounds.</td></tr>
+        <tr><td>Chest closer (≈ −2″)</td><td>Use 2 underarm ch (body 128 sts). Sleeves start at 42 sts; do 5 decrease rounds.</td></tr>
+        <tr><td>Deeper armhole</td><td>Add plain rounds at the end of the yoke (Step 5).</td></tr>
+        <tr><td>Wider sleeves</td><td>Change one or more plain yoke rounds into full-increase rounds (+2 sts per sleeve each time); add matching decreases on the sleeve.</td></tr>
+        <tr><td>Back rides up / neck pulls back</td><td>Normal for a top-down raglan without short rows — wear the neckband slightly lower in front, or make the neckband 1–2 rounds deeper.</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+</div>
+
+<div class="container" style="padding-top:0; text-align:center;">
+  <button class="reset-btn" onclick="resetProgress()">↺ Reset all progress</button>
+</div>
+
+<footer class="site-footer">
+  <p>Skyscape Raglan · Original pattern by ptrestler · Tap a step number to mark it done</p>
+</footer>
+
+<script>
+  const STORAGE_KEY = 'skyscape-raglan-checks';
+
+  function loadState() {
+    try { return JSON.parse(localStorage.getItem(STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+  }
+  function saveState(state) {
+    try { localStorage.setItem(STORAGE_KEY, JSON.stringify(state)); } catch(e) {}
+  }
+
+  function initCheckboxes() {
+    const state = loadState();
+    document.querySelectorAll('.step-item').forEach((step, i) => {
+      const numEl = step.querySelector('.step-num');
+      if (!numEl) return;
+      const orig = numEl.textContent.trim();
+      step.dataset.orig = orig;
+      const key = 'step-' + i;
+
+      if (state[key]) {
+        step.classList.add('checked');
+        numEl.textContent = '✓';
+      }
+
+      numEl.addEventListener('click', () => {
+        const isChecked = step.classList.toggle('checked');
+        numEl.textContent = isChecked ? '✓' : orig;
+        const s = loadState();
+        s[key] = isChecked;
+        saveState(s);
+      });
+    });
+  }
+
+  function resetProgress() {
+    if (!confirm('Reset all progress?')) return;
+    saveState({});
+    document.querySelectorAll('.step-item').forEach((step) => {
+      step.classList.remove('checked');
+      const numEl = step.querySelector('.step-num');
+      if (numEl) numEl.textContent = step.dataset.orig || numEl.textContent;
+    });
+  }
+
+  initCheckboxes();
+</script>
+</body>
+</html>
